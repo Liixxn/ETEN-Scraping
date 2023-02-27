@@ -3,6 +3,7 @@ import os
 import json
 from googleapiclient.errors import HttpError
 
+datoBuscar='tarta de tres chocolates'
 #Inicializamos la variable que contiene la key de la api con nuestra cuenta de loffelsoftwares@gmail.com
 API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U'
 #Inicializamis nuestr variable youtube con la conexion a youtube, utilizamos la version 3 de la api y nuestra clave o key
@@ -15,7 +16,7 @@ youtube = build('youtube', 'v3', developerKey=API_KEY)
 #La variable order ordena los videos que estamos buscando en nuestro caso por relevancia,
 #aunque tambien podemos hacerlo por visualizaciones: order='viewCount'
 #La variable maxResults indica la cantidad de videos que queremos buscar
-todosVideos = youtube.search().list(q='gato', part='id,snippet', type='video', order='relevance', maxResults=3).execute()
+todosVideos = youtube.search().list(q=datoBuscar, part='id,snippet', type='video', order='relevance', maxResults=10).execute()
 
 #Esto se modificara por una BBDD
 rutaJson='comentarios.json'
@@ -74,12 +75,19 @@ for video in todosVideos.get('items', []):
         #Con este except evitamos que falle la busqueda de los videos con un error de http
         #En este if comprobamos la respuesta 403 para ver si el video tiene o no comentarios habilitados
         if error.resp.status == 403 and b"commentsDisabled" in error.content:
-            print("Los comentarios estan deshabilitados para el video: {}".format(video_url))
+            print("Los comentarios estan deshabilitados para el video: " + video_url)
         else:
-            print("Ocurrio un error al obtener los comentarios para el video: {}".format(video_url))
+            print("Ocurrio un error al obtener los comentarios para el video: " + video_url)
 
 #Esto se modificara por una BBDD
 with open(rutaJson, 'w') as f:
     json.dump(data, f)
 
 print('Comentarios almacenados en el archivo: ' + rutaJson)
+
+
+
+
+
+#pip install clean-text
+#clean(text,no_emoji=True)
