@@ -22,15 +22,21 @@ def leer_stopwords(path):
 # Metodo que porcentualiza los resultados del analisis de sentimiento
 
 
-def sacarPorcentajeAnalisi(resultados):
+def sacarPorcentajeAnalisis(resultados):
     resultadosFinales = {}
     for key, resultados_valores in resultados.items():
         porcentajes = []
         # Sacamos el total de sumar los comentarios Positivos (resultados_valores[0]) y los negativos (resultados_valores[1])
         totalPosNeg = resultados_valores[0] + resultados_valores[1]
         # Sacamos los porcentajes
-        porcenPos = round(((resultados_valores[0]*100)/totalPosNeg), 2)
-        porcenNeg = round(((resultados_valores[1]*100)/totalPosNeg), 2)
+        # Si no hay comentarios positivos ni negativos igualamos el porcentaje poniendo 50% a cada uno
+        if totalPosNeg != 0:
+            porcenPos = round(((resultados_valores[0]*100)/totalPosNeg), 2)
+            porcenNeg = round(((resultados_valores[1]*100)/totalPosNeg), 2)
+        else:
+            porcenPos = 50
+            porcenNeg = 50
+
         # Metemos los porcentajes en una lista
         porcentajes.append(porcenPos)
         porcentajes.append(porcenNeg)
@@ -99,7 +105,7 @@ for key, valores in comments.items():
     resultados[key] = resultados_valores
 
 # LLamamos al metodo que nos saca el porcentaje de los comentarios y nos lo redondea a 2 decimales
-resultadosFinales = sacarPorcentajeAnalisi(resultados)
+resultadosFinales = sacarPorcentajeAnalisis(resultados)
 
 # Pintamos resultados
 for key, resultados_valores in resultadosFinales.items():

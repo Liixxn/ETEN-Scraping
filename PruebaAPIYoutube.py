@@ -4,7 +4,7 @@ import json
 from googleapiclient.errors import HttpError
 
 # Variable con el texto a buscar en YouTube
-datoBuscar='tarta de tres chocolates'
+datoBuscar='pollo al curry'
 
 #Inicializamos la variable que contiene la key de la api con nuestra cuenta de loffelsoftwares@gmail.com
 API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U'
@@ -20,7 +20,7 @@ youtube = build('youtube', 'v3', developerKey=API_KEY)
 #La variable order ordena los videos que estamos buscando en nuestro caso por relevancia,
 #aunque tambien podemos hacerlo por visualizaciones: order='viewCount'
 #La variable maxResults indica la cantidad de videos que queremos buscar
-todosVideos = youtube.search().list(q=datoBuscar, part='id,snippet', type='video', order='relevance', maxResults=10).execute()
+todosVideos = youtube.search().list(q=datoBuscar, part='id,snippet', type='video', order='relevance', maxResults=25).execute()
 
 #Esto se modificara por una BBDD
 rutaJson='comentarios.json'
