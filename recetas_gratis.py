@@ -1,6 +1,7 @@
 # Librerias
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 # Headers para poder acceder a la pagina
 header = {
@@ -71,8 +72,6 @@ def obtener_numPaginasPorCategoria(links_categorias):
 
         num_categoria += 1
 
-
-
     # Navega entre las diferentes hojas de cada categoria y obtiene los links de las diferentes
     nombres_recetas_pag = []
     for i in links:
@@ -125,14 +124,20 @@ def obtener_datos_receta(nombres_recetas_pag):
             titulo_recetas.append(titulo)
 
             # Obtener la imagen de la receta
-            imagen_plato_recetasGratis = soup_receta_info.find('div', class_="imagen")
-            if imagen_plato_recetasGratis is None:
+            try:
+                imagen_plato_recetasGratis = soup_receta_info.find('div', class_="imagen")
+
+                if imagen_plato_recetasGratis is None:
+                    imagen_plato_recetasGratis = "Sin Informacion"
+                    imagen_cadaReceta.append(imagen_plato_recetasGratis)
+                else:
+                    # Se obtiene la etiqueta <img> y de ella la url de la imagen
+                    link_imagen_plato = imagen_plato_recetasGratis.find('img').get('src')
+
+                    imagen_cadaReceta.append(link_imagen_plato)
+            except Exception as e:
                 imagen_plato_recetasGratis = "Sin Informacion"
                 imagen_cadaReceta.append(imagen_plato_recetasGratis)
-            else:
-                # Se obtiene la etiqueta <img> y de ella la url de la imagen
-                link_imagen_plato = imagen_plato_recetasGratis.find('img').get('src')
-                imagen_cadaReceta.append(link_imagen_plato)
 
             # Obtener el numero de comensales
             n_comensales = soup_receta_info.find('span', {"class": "property comensales"})
@@ -180,17 +185,29 @@ def obtener_datos_receta(nombres_recetas_pag):
 
             # Obtener los pasos de cada receta
             # En los pasos se debe eliminar el ultimo parrafo ya que no se trata de un paso
+            list_temp_pasos = []
             contenedor_pasos = soup_receta_info.find_all('div', class_="apartado")
             for i in range(len(contenedor_pasos)):
                 pasos = contenedor_pasos[i].find_all('p')
                 for j in pasos:
-                    pasos_receta.append(j.get_text())
+                    list_temp_pasos.append(j.get_text())
+            pasos_receta.append(list_temp_pasos)
 
     return titulo_recetas, imagen_cadaReceta, recetas_n_comensales, recetas_duracion, recetas_dificultad, recetas_ingredientes, pasos_receta
 
 
 lista_linksCadaCategoria = obtener_links_categorias()
 lista_paginasCadaCategoria = obtener_numPaginasPorCategoria(lista_linksCadaCategoria)
-obtener_datos_receta(lista_paginasCadaCategoria)
 
+titulos, imagen, comensales, duracion, dificultad, ingredientes, pasos = obtener_datos_receta(
+    lista_paginasCadaCategoria)
+df = pd.DataFrame(columns=["titulo", "imagen", "comensales", "duracion", "dificultad", "ingredientes", "pasos"])
+df["titulo"] = titulos
+df["imagen"] = imagen
+df["comensales"] = comensales
+df["duracion"] = duracion
+df["dificultad"] = dificultad
+df["ingredientes"] = ingredientes
+df["pasos"] = pasos
 
+df.to_csv('df_recetas_gratis.csv', index=False)
