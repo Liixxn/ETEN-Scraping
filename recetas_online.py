@@ -1,6 +1,7 @@
 # Librerias
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 # Headers para poder acceder a la pagina
 header = {
@@ -10,7 +11,7 @@ header = {
 
 # Se realiza una peticion a la pagina web de recetas online
 url_recetas_online = "https://www.recetasonline.net/recetas-de-cocina/"
-pag_recetas_online = requests.get(url_recetas_online, hearders=header)
+pag_recetas_online = requests.get(url_recetas_online, headers=header)
 soup_recetas_online = BeautifulSoup(pag_recetas_online.content, 'html.parser')
 
 
@@ -162,4 +163,15 @@ def obtenerDatosReceta(recetas_x_categoria):
 lista_categoriasRecetasOnline = obtenerCategorias_RecetasOnline()
 lista_recetasRecetasOnline, lista_imagenesRecetasOnline = obtenerNumPaginasPorCategoria(lista_categoriasRecetasOnline)
 obtenerDatosReceta(lista_recetasRecetasOnline)
+titulos, comen, tiempo, ingredientes, pasos = obtenerDatosReceta(lista_recetasRecetasOnline)
+
+df = pd.DataFrame(columns=["titulo", "comensales", "tiempo", "ingredientes", "pasos", "imagenes"])
+df["titulo"] = titulos
+df["comensales"] = comen
+df["tiempo"] = tiempo
+df["ingredientes"] = ingredientes
+df["pasos"] = pasos
+df["imagenes"] = lista_imagenesRecetasOnline
+
+df.to_csv('df_recetas_online.csv', index=False)
 
