@@ -50,8 +50,8 @@ def scrapingPorCategoria(todas_categorias_hola):
     iteradorCategoria = 0
     # for categoria_actual in todas_categorias_hola:
     lista_url_paginacion = []
-    url_categoria_hola = todas_categorias_hola[10]  # categoria_actual
-    nombre_categoria_seleccionada = nombres_categorias[10]  # iteradorCategoria
+    url_categoria_hola = todas_categorias_hola[17]  # categoria_actual
+    nombre_categoria_seleccionada = nombres_categorias[17]  # iteradorCategoria
     nombre_categoria_seleccionada = nombre_categoria_seleccionada.upper() + '/'
 
     # Guardamos el primer enlace de las primeras recetas
@@ -164,4 +164,4 @@ df["ingredientes"] = ingredientes
 df["pasos"] = pasos
 df["nombre_categoria"] = nombre_categoria
 
-df.to_csv('df_hola_final_10.csv', index=False, sep=';')
+df.to_csv('df_hola_final_17.csv', index=False, sep=';')
