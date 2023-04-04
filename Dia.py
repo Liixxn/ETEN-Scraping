@@ -7,7 +7,7 @@ header = {
     'Accept-Language': 'es'
 }
 # Dataframe que guarda la informacion
-df_dia = pd.DataFrame(columns=['nombre', 'precio_original', 'precio_actual', 'imagen'])
+df_dia = pd.DataFrame(columns=['nombre', 'precio_original', 'precio_actual', 'imagen', 'url'])
 # link de la pagina principal de dia
 url_original = 'https://www.dia.es'
 # link de la pagina web de ofertas para dia
@@ -50,6 +50,7 @@ nombre_producto = []
 precios_original = []
 precios_descuento = []
 imagenes_producto = []
+productos_urls = []
 
 # Se recorre la lista de hojas de las ofertas
 for link in lista_hojas_ofertas_dia:
@@ -57,7 +58,8 @@ for link in lista_hojas_ofertas_dia:
     soup_dia_ofertas = BeautifulSoup(response.content, 'html.parser')
     # Se obtienen todos los productos que se encuentren en esa hoja
     productos = soup_dia_ofertas.find_all('div', class_="product-list__item")
-    
+
+
     # Se recorre cada producto para ser analziado, ya que en la pagina de ofertas tambien se encuentran elementos que no
     # pertencen a alimentacion, por lo que se debe realizar un filtro. Para ello se va hacer uso de la lista 'words' que
     # comprueba que en la url de cada producto aparezca alguno de esas categorias, ya que asi se puede determinar que
@@ -66,6 +68,7 @@ for link in lista_hojas_ofertas_dia:
         for word in words:
             # Aqui se comprueba que exista en la url alguna de las categorias
             if word in product.find('a').get('href'):
+
                 # Se obtiene el precio del producto
                 precio = product.find('p', class_='price')
                 # Se comprueba que la longitud del precio devuelto sea mayor a 1, ya que para los productos que se encuentran
@@ -84,10 +87,15 @@ for link in lista_hojas_ofertas_dia:
                     # Se obtiene la imagen del producto
                     imagen = product.find('img', class_="crispImage").get('src')
                     imagenes_producto.append(imagen)
+
+                    producto_url = product.find('a').get('href')
+                    productos_urls.append(url_original+producto_url)
+
                     
 df_dia['nombre'] = nombre_producto
 df_dia['precio_original'] = precios_original
 df_dia['precio_actual'] = precios_descuento
 df_dia['imagen'] = imagenes_producto
+df_dia['url'] = productos_urls
 # Se escribe el contenido del dataframe a un csv
-df_dia.to_csv('dia-ofertas.csv', sep=';', index=False)
+df_dia.to_csv('ofertas/dia-ofertas.csv', sep=';', index=False)
