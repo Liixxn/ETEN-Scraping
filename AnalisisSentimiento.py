@@ -117,5 +117,3 @@ def analisisSentimiento():
 
     return resultados_valores[0], resultados_valores[1]
 
-
-analisisSentimiento()

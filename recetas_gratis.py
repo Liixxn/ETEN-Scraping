@@ -210,4 +210,4 @@ df["dificultad"] = dificultad
 df["ingredientes"] = ingredientes
 df["pasos"] = pasos
 
-df.to_csv('df_recetas_gratis.csv', index=False)
+df.to_csv('recetas_csv/df_recetas_gratis.csv', index=False, sep=";")

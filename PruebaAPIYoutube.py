@@ -5,8 +5,8 @@ from googleapiclient.errors import HttpError
 
 
 #Inicializamos la variable que contiene la key de la api con nuestra cuenta de loffelsoftwares@gmail.com
-API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U'
-
+#API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U' #Loffel
+API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
 
 def obtenerComentarios(recetaBuscar):
 

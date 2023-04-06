@@ -3,6 +3,11 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
+
+import PruebaAPIYoutube
+import AnalisisSentimiento
+
+
 # Headers para poder acceder a la pagina
 header = {
     'User-Agent': 'Chrome 108.0.5359.125',
@@ -109,6 +114,8 @@ def obtenerDatosReceta(recetas_x_categoria):
     tiempo_porReceta_recetas_online = []
     ingredientes_porReceta_recetas_online = []
     pasos_porReceta_recetas_online = []
+    lista_sentimientoPositivos = []
+    lista_sentimientoNegativos = []
 
     # Se recorre la lista de recetas obtenida anteriormente
     for link_receta_ in recetas_x_categoria:
@@ -156,22 +163,36 @@ def obtenerDatosReceta(recetas_x_categoria):
             lista_temp_pasos.append(list_pasos_recetas_online[paso].get_text())
         pasos_porReceta_recetas_online.append(lista_temp_pasos)
 
-    return titulos_recetas_recetas_online, comensales_porReceta_recetas_online, tiempo_porReceta_recetas_online, ingredientes_porReceta_recetas_online, pasos_porReceta_recetas_online
+        if titulo_receta == "Sin Informacion":
+            lista_sentimientoPositivos.append("Sin Informacion")
+            lista_sentimientoNegativos.append("Sin Informacion")
+        else:
+            PruebaAPIYoutube.obtenerComentarios(titulo_receta)
+            print(titulo_receta)
+            senPos, senNeg = AnalisisSentimiento.analisisSentimiento()
+            lista_sentimientoPositivos.append(senPos)
+            lista_sentimientoNegativos.append(senNeg)
+
+    return titulos_recetas_recetas_online, comensales_porReceta_recetas_online, tiempo_porReceta_recetas_online, ingredientes_porReceta_recetas_online, pasos_porReceta_recetas_online, lista_sentimientoPositivos, lista_sentimientoNegativos
 
 
 
 lista_categoriasRecetasOnline = obtenerCategorias_RecetasOnline()
 lista_recetasRecetasOnline, lista_imagenesRecetasOnline = obtenerNumPaginasPorCategoria(lista_categoriasRecetasOnline)
 obtenerDatosReceta(lista_recetasRecetasOnline)
-titulos, comen, tiempo, ingredientes, pasos = obtenerDatosReceta(lista_recetasRecetasOnline)
+titulos, comen, tiempo, ingredientes, pasos, positivo, negativo = obtenerDatosReceta(lista_recetasRecetasOnline)
 
-df = pd.DataFrame(columns=["titulo", "comensales", "tiempo", "ingredientes", "pasos", "imagenes"])
+df = pd.DataFrame(columns=["titulo", "imagen", "comensales", "duracion", "dificultad", "ingredientes", "pasos", "sentimiento_pos", "sentimiento_neg"])
 df["titulo"] = titulos
+df["imagen"] = lista_imagenesRecetasOnline
 df["comensales"] = comen
-df["tiempo"] = tiempo
+df["duracion"] = tiempo
+df["dificultad"] = ""
 df["ingredientes"] = ingredientes
 df["pasos"] = pasos
-df["imagenes"] = lista_imagenesRecetasOnline
+df["sentimiento_pos"] = positivo
+df["sentimiento_neg"] = negativo
 
-df.to_csv('df_recetas_online.csv', index=False)
+
+df.to_csv('recetas_csv/df_recetas_online.csv', index=False, sep=";")
 
