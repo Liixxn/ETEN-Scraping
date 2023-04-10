@@ -165,13 +165,15 @@ lista_recetasRecetasOnline, lista_imagenesRecetasOnline = obtenerNumPaginasPorCa
 obtenerDatosReceta(lista_recetasRecetasOnline)
 titulos, comen, tiempo, ingredientes, pasos = obtenerDatosReceta(lista_recetasRecetasOnline)
 
-df = pd.DataFrame(columns=["titulo", "comensales", "tiempo", "ingredientes", "pasos", "imagenes"])
+df = pd.DataFrame(columns=["titulo", "imagen", "comensales", "duracion", "dificultad", "ingredientes", "pasos"])
 df["titulo"] = titulos
+df["imagen"] = lista_imagenesRecetasOnline
 df["comensales"] = comen
-df["tiempo"] = tiempo
+df["duracion"] = tiempo
+df["dificultad"] = ""
 df["ingredientes"] = ingredientes
 df["pasos"] = pasos
-df["imagenes"] = lista_imagenesRecetasOnline
 
-df.to_csv('df_recetas_online.csv', index=False)
+
+df.to_csv('recetas_csv/df_recetas_online.csv', index=False, sep=';')
 
