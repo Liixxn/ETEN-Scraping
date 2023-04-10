@@ -66,8 +66,10 @@ def analisisSentimiento():
             # Pasamos todo a minusculas
             textoMinusculas = (map(lambda x: x.lower(), textoTokenizado))
             # Seleccionamos nuestro fichero de stopwords y lo aplicamos
-            stop_words_sp = leer_stopwords("./StopWords/stop_words_spanish.txt")
-            pasarStopWords = [i for i in textoMinusculas if i not in stop_words_sp]
+            stop_words_sp = leer_stopwords(
+                "./StopWords/stop_words_spanish.txt")
+            pasarStopWords = [
+                i for i in textoMinusculas if i not in stop_words_sp]
             # Metemos el resultado final en una lista llamada listaComentariosTratados
             listaComentariosTratados.append(pasarStopWords)
         # metemos la listaComentariosTratados en el diccionario con su respectiva clave la cual es la url del video
@@ -97,8 +99,12 @@ def analisisSentimiento():
             negativos.append(sentimiento['neg'])
 
         # Para cada Key hacemos la media de los comentarios
-        media_positivos = statistics.mean(positivos)
-        media_negativos = statistics.mean(negativos)
+        if len(positivos) == 0 or len(negativos) == 0:
+            media_positivos = 0
+            media_negativos = 0
+        else:
+            media_positivos = statistics.mean(positivos)
+            media_negativos = statistics.mean(negativos)
 
         # Metemos las medias en una lista
         resultados_valores.append(media_positivos)
@@ -110,10 +116,17 @@ def analisisSentimiento():
     # LLamamos al metodo que nos saca el porcentaje de los comentarios y nos lo redondea a 2 decimales
     resultadosFinales = sacarPorcentajeAnalisis(resultados)
 
+    datoFinalPositivo = []
+    datoFinalNegativo = []
     # Pintamos resultados
     for key, resultados_valores in resultadosFinales.items():
+        datoFinalPositivo.append(resultados_valores[0])
+        datoFinalNegativo.append(resultados_valores[1])
         print(key + ' -> Positivo: ' +
               str(resultados_valores[0]) + ', Negativo: ' + str(resultados_valores[1]))
 
-    return resultados_valores[0], resultados_valores[1]
+    # Con esto el return devuelve la media final de los sentimientos pos y neg para poder guardarse en la BBDD
+    resultado_Pos = round(statistics.mean(datoFinalPositivo), 2)
+    resultado_Neg = round(statistics.mean(datoFinalNegativo), 2)
+    return resultado_Pos, resultado_Neg
 

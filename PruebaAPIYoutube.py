@@ -1,15 +1,21 @@
+import csv
 from googleapiclient.discovery import build
 import os
 import json
 from googleapiclient.errors import HttpError
+import pandas as pd
+import AnalisisSentimiento
 
 
-#Inicializamos la variable que contiene la key de la api con nuestra cuenta de loffelsoftwares@gmail.com
-#API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U' #Loffel
-API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
+# Inicializamos la variable que contiene la key de la api con nuestra cuenta de loffelsoftwares@gmail.com
+# API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U'  # Loffel
+# API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
+# API_KEY = 'AIzaSyDSYGd1W9HHIofRBr-DjZLG_GUlbDqLNxQ'  # Rober
+# API_KEY = 'AIzaSyBDkbGwmJ7siXkT9l6q7CMaz_IYB2jPJZ4'
+API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
+
 
 def obtenerComentarios(recetaBuscar):
-
 
     # Variable con el texto a buscar en YouTube
     datoBuscar = recetaBuscar
@@ -26,7 +32,7 @@ def obtenerComentarios(recetaBuscar):
     # aunque tambien podemos hacerlo por visualizaciones: order='viewCount'
     # La variable maxResults indica la cantidad de videos que queremos buscar
     todosVideos = youtube.search().list(q=datoBuscar, part='id,snippet', type='video', order='relevance',
-                                        maxResults=25).execute()
+                                        maxResults=15).execute()
 
     # Esto se modificara por una BBDD
     rutaJson = 'comentarios.json'
@@ -95,17 +101,36 @@ def obtenerComentarios(recetaBuscar):
             if error.resp.status == 403 and b"commentsDisabled" in error.content:
                 print("Los comentarios estan deshabilitados para el video: " + video_url)
             else:
-                print("Ocurrio un error al obtener los comentarios para el video: " + video_url)
+                print(
+                    "Ocurrio un error al obtener los comentarios para el video: " + video_url)
 
     # Esto se modificara por una BBDD
-    with open(rutaJson, 'w') as f:
-        json.dump(data, f)
+    with open(rutaJson, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False)
 
     print('Comentarios almacenados en el archivo: ' + rutaJson)
 
 
+# pip install clean-text
+# clean(text,no_emoji=True)
 
 
+datos = pd.read_csv('recetas_csv/df_recetas_online.csv',
+                    delimiter=';')
 
-#pip install clean-text
-#clean(text,no_emoji=True)
+# empieza 2 mas que el primero y acaba uno menos que el ultimo
+datos_seleccionados = datos.iloc[80:90]
+
+for indice, fila in datos_seleccionados.iterrows():
+
+    # print(indice)
+    titulo_recetas = fila['titulo']
+    print(titulo_recetas)
+    obtenerComentarios(titulo_recetas)
+
+    sentimientoPos, sentimientoNeg = AnalisisSentimiento.analisisSentimiento()
+    datos.at[indice, 'sentimientoPos'] = sentimientoPos
+    datos.at[indice, 'sentimientoNeg'] = sentimientoNeg
+
+
+datos.to_csv('recetas_csv/df_recetas_online.csv', sep=";", index=False)
