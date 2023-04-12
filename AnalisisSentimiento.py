@@ -46,6 +46,15 @@ def sacarPorcentajeAnalisis(resultados):
         resultadosFinales[key] = porcentajes
     return resultadosFinales
 
+# Para comprobar si los valores del array son todos 0
+
+
+def es_entero_de_cero(arr):
+    for num in arr:
+        if not isinstance(num, int) or num != 0:
+            return False
+    return True
+
 
 def analisisSentimiento():
     # Leemos los datos
@@ -125,8 +134,14 @@ def analisisSentimiento():
         print(key + ' -> Positivo: ' +
               str(resultados_valores[0]) + ', Negativo: ' + str(resultados_valores[1]))
 
-    # Con esto el return devuelve la media final de los sentimientos pos y neg para poder guardarse en la BBDD
-    resultado_Pos = round(statistics.mean(datoFinalPositivo), 2)
-    resultado_Neg = round(statistics.mean(datoFinalNegativo), 2)
+    if es_entero_de_cero(datoFinalPositivo):
+        resultado_Pos = 0
+        resultado_Neg = 100
+    elif es_entero_de_cero(datoFinalNegativo):
+        resultado_Pos = 100
+        resultado_Neg = 0
+    else:
+        # Con esto el return devuelve la media final de los sentimientos pos y neg para poder guardarse en la BBDD
+        resultado_Pos = round(statistics.mean(datoFinalPositivo), 2)
+        resultado_Neg = round(statistics.mean(datoFinalNegativo), 2)
     return resultado_Pos, resultado_Neg
-

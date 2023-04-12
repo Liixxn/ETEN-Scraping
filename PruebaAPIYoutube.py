@@ -8,11 +8,11 @@ import AnalisisSentimiento
 
 
 # Inicializamos la variable que contiene la key de la api con nuestra cuenta de loffelsoftwares@gmail.com
-# API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U'  # Loffel
-# API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
+# API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U' # Loffel se repite no se puede usar
+API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
 # API_KEY = 'AIzaSyDSYGd1W9HHIofRBr-DjZLG_GUlbDqLNxQ'  # Rober
 # API_KEY = 'AIzaSyBDkbGwmJ7siXkT9l6q7CMaz_IYB2jPJZ4'
-API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
+# API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
 
 
 def obtenerComentarios(recetaBuscar):
@@ -32,7 +32,7 @@ def obtenerComentarios(recetaBuscar):
     # aunque tambien podemos hacerlo por visualizaciones: order='viewCount'
     # La variable maxResults indica la cantidad de videos que queremos buscar
     todosVideos = youtube.search().list(q=datoBuscar, part='id,snippet', type='video', order='relevance',
-                                        maxResults=15).execute()
+                                        maxResults=5).execute()
 
     # Esto se modificara por una BBDD
     rutaJson = 'comentarios.json'
@@ -115,11 +115,13 @@ def obtenerComentarios(recetaBuscar):
 # clean(text,no_emoji=True)
 
 
-datos = pd.read_csv('recetas_csv/df_recetas_online.csv',
+datos = pd.read_csv('recetas_csv/df_hola_todo.csv',
                     delimiter=';')
 
+# Esto se utiliza para no exceder las peticiones de la api y que no de error
+# Se van ejecutando por tramos los csv
 # empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[80:90]
+datos_seleccionados = datos.iloc[240:250]
 
 for indice, fila in datos_seleccionados.iterrows():
 
@@ -133,4 +135,4 @@ for indice, fila in datos_seleccionados.iterrows():
     datos.at[indice, 'sentimientoNeg'] = sentimientoNeg
 
 
-datos.to_csv('recetas_csv/df_recetas_online.csv', sep=";", index=False)
+datos.to_csv('recetas_csv/df_hola_todo.csv', sep=";", index=False)
