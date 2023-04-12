@@ -358,5 +358,5 @@ print("Precision " + str(precisionRF))
 #print(confusionMatrixSVC)
 # print("Precision " + str(precisionSVC))
 
-#nombreFicheroGuardar = "modeloRandomForest"
-#joblib.dump(modelRf, nombreFicheroGuardar + ".pkl")
+nombreFicheroGuardar = "modeloRandomForest"
+joblib.dump(modelRf, nombreFicheroGuardar + ".pkl")

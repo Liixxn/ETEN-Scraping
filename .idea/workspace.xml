@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b23083e-61c9-4a5b-9135-d07b5eafaf97" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/clasificacion.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/procesamientoTexto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_csv/df_recetas_online.csv" beforeDir="false" afterPath="$PROJECT_DIR$/recetas_csv/df_recetas_online.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/recetas_online.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trainingModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainingModel.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,9 +36,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/lemba/PycharmProjects/ETEN-app",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.fileTypes"
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.fileTypes",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected="Python.clasificacion">
@@ -169,13 +170,17 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="189ef025-686b-4b20-bb44-97944e4eaf33" name="Changes" comment="" />
+      <changelist id="0b23083e-61c9-4a5b-9135-d07b5eafaf97" name="Changes" comment="" />
       <created>1677239648263</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1677239648263</updated>
+      <workItem from="1681288928808" duration="2442000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ETEN_Scraping$PruebaAPIYoutube.coverage" NAME="PruebaAPIYoutube Coverage Results" MODIFIED="1680780844103" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
