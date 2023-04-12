@@ -1,12 +1,13 @@
 # Librerias
+import joblib
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-
+import mysql.connector
 
 import PruebaAPIYoutube
 import AnalisisSentimiento
-
+import procesamientoTexto
 
 # Headers para poder acceder a la pagina
 header = {
@@ -106,9 +107,7 @@ def obtenerNumPaginasPorCategoria(links_categorias_recetas_online):
     return recetas_x_categoria, imagen_recetas_recetas_online
 
 
-
 def obtenerDatosReceta(recetas_x_categoria):
-
     titulos_recetas_recetas_online = []
     comensales_porReceta_recetas_online = []
     tiempo_porReceta_recetas_online = []
@@ -163,26 +162,27 @@ def obtenerDatosReceta(recetas_x_categoria):
             lista_temp_pasos.append(list_pasos_recetas_online[paso].get_text())
         pasos_porReceta_recetas_online.append(lista_temp_pasos)
 
-        if titulo_receta == "Sin Informacion":
-            lista_sentimientoPositivos.append("Sin Informacion")
-            lista_sentimientoNegativos.append("Sin Informacion")
-        else:
-            PruebaAPIYoutube.obtenerComentarios(titulo_receta)
-            print(titulo_receta)
-            senPos, senNeg = AnalisisSentimiento.analisisSentimiento()
-            lista_sentimientoPositivos.append(senPos)
-            lista_sentimientoNegativos.append(senNeg)
+        # if titulo_receta == "Sin Informacion":
+        #     lista_sentimientoPositivos.append("Sin Informacion")
+        #     lista_sentimientoNegativos.append("Sin Informacion")
+        # else:
+        #     PruebaAPIYoutube.obtenerComentarios(titulo_receta)
+        #     print(titulo_receta)
+        #     senPos, senNeg = AnalisisSentimiento.analisisSentimiento()
+        #     lista_sentimientoPositivos.append(senPos)
+        #     lista_sentimientoNegativos.append(senNeg)
 
-    return titulos_recetas_recetas_online, comensales_porReceta_recetas_online, tiempo_porReceta_recetas_online, ingredientes_porReceta_recetas_online, pasos_porReceta_recetas_online, lista_sentimientoPositivos, lista_sentimientoNegativos
-
+    return titulos_recetas_recetas_online, comensales_porReceta_recetas_online, tiempo_porReceta_recetas_online, ingredientes_porReceta_recetas_online, pasos_porReceta_recetas_online  # , lista_sentimientoPositivos, lista_sentimientoNegativos
 
 
 lista_categoriasRecetasOnline = obtenerCategorias_RecetasOnline()
 lista_recetasRecetasOnline, lista_imagenesRecetasOnline = obtenerNumPaginasPorCategoria(lista_categoriasRecetasOnline)
 obtenerDatosReceta(lista_recetasRecetasOnline)
-titulos, comen, tiempo, ingredientes, pasos, positivo, negativo = obtenerDatosReceta(lista_recetasRecetasOnline)
+titulos, comen, tiempo, ingredientes, pasos = obtenerDatosReceta(lista_recetasRecetasOnline)
 
-df = pd.DataFrame(columns=["titulo", "imagen", "comensales", "duracion", "dificultad", "ingredientes", "pasos", "sentimiento_pos", "sentimiento_neg"])
+df = pd.DataFrame(
+    columns=["titulo", "imagen", "comensales", "duracion", "dificultad", "ingredientes", "pasos", "sentimientoPos",
+             "sentimientoNeg", "Categoria"])
 df["titulo"] = titulos
 df["imagen"] = lista_imagenesRecetasOnline
 df["comensales"] = comen
@@ -190,8 +190,51 @@ df["duracion"] = tiempo
 df["dificultad"] = ""
 df["ingredientes"] = ingredientes
 df["pasos"] = pasos
-df["sentimiento_pos"] = positivo
-df["sentimiento_neg"] = negativo
+df["sentimientoPos"] = ""
+df["sentimientoNeg"] = ""
+df["Categoria"] = "Sin Clasificar"
+
+# df.to_csv('recetas_csv/df_recetas_online.csv', index=False, sep=";")
+
+# obtener comentarios de cada receta
+df_recetas_online = df.copy()
+# df_recetas_online = pd.read_csv('recetas_csv/df_recetas_online.csv', sep=";")
+# for titulo in df_recetas_online["titulo"]:
+#     if titulo == "Sin Informacion":
+#         df_recetas_online["sentimiento_pos"] = "Sin Informacion"
+#         df_recetas_online["sentimiento_neg"] = "Sin Informacion"
+#     else:
+#         PruebaAPIYoutube.obtenerComentarios(titulo)
+#         print(titulo)
+#         senPos, senNeg = AnalisisSentimiento.analisisSentimiento()
+#         df_recetas_online["sentimiento_pos"] = senPos
+#         df_recetas_online["sentimiento_neg"] = senNeg
 
 
-df.to_csv('recetas_csv/df_recetas_online.csv', index=False, sep=";")
+# df_clasificacion = pd.DataFrame(columns=["Receta", "Categoria"])
+#
+# listaRecetasContenido = []
+#
+# for indiceDF, fila in df_recetas_online.iterrows():
+#     listaRecetasContenido.append(fila["titulo"] + fila["pasos"])
+#
+# df_clasificacion["Receta"] = listaRecetasContenido
+# df_clasificacion["Categoria"] = "Sin Clasificar"
+#
+# df_tratado = procesamientoTexto.tratamientoBasico(df_clasificacion)
+# df_stopwords = procesamientoTexto.quit_stopwords(df_tratado)
+# df_stem = procesamientoTexto.stemming(df_stopwords)
+#
+# cargaModelo = joblib.load("modeloRandomForest.pkl")
+# for i in range(len(df_stem["Receta"])):
+#     unidos = " ".join(df_stem["Receta"][i])
+#
+#     df_stem["Receta"][i] = str(unidos)
+#
+# Y_pred = cargaModelo.predict(df_stem['Receta'])
+# listaPredicciones = Y_pred.tolist()
+# df["Categoria"] = listaPredicciones
+
+
+
+
