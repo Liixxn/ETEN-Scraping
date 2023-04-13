@@ -8,11 +8,12 @@ import AnalisisSentimiento
 
 
 # Inicializamos la variable que contiene la key de la api con nuestra cuenta de loffelsoftwares@gmail.com
-# API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U' # Loffel se repite no se puede usar
-API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
+# API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U' # Loffel
+# API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
 # API_KEY = 'AIzaSyDSYGd1W9HHIofRBr-DjZLG_GUlbDqLNxQ'  # Rober
-# API_KEY = 'AIzaSyBDkbGwmJ7siXkT9l6q7CMaz_IYB2jPJZ4'
+# API_KEY = 'AIzaSyBDkbGwmJ7siXkT9l6q7CMaz_IYB2jPJZ4' NO USAR ESTA NO FUNCIONA 
 # API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
+API_KEY = 'AIzaSyCs6FGPDPU_EwzwZ-t9rLimZMUcW4BNj80'
 
 
 def obtenerComentarios(recetaBuscar):
@@ -121,7 +122,7 @@ datos = pd.read_csv('recetas_csv/df_hola_todo.csv',
 # Esto se utiliza para no exceder las peticiones de la api y que no de error
 # Se van ejecutando por tramos los csv
 # empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[240:250]
+datos_seleccionados = datos.iloc[650:660]
 
 for indice, fila in datos_seleccionados.iterrows():
 
