@@ -122,7 +122,7 @@ datos = pd.read_csv('recetas_csv/df_hola_todo.csv',
 # Esto se utiliza para no exceder las peticiones de la api y que no de error
 # Se van ejecutando por tramos los csv
 # empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[650:660]
+datos_seleccionados = datos.iloc[1060:1070]
 
 for indice, fila in datos_seleccionados.iterrows():
 
