@@ -91,11 +91,13 @@ for link in lista_hojas_ofertas_dia:
                     producto_url = product.find('a').get('href')
                     productos_urls.append(url_original+producto_url)
 
-                    
-df_dia['nombre'] = nombre_producto
-df_dia['precio_original'] = precios_original
-df_dia['precio_actual'] = precios_descuento
-df_dia['imagen'] = imagenes_producto
-df_dia['url'] = productos_urls
+def scraper_dia():
+    df_dia['nombre'] = nombre_producto
+    df_dia['precio_original'] = precios_original
+    df_dia['precio_actual'] = precios_descuento
+    df_dia['imagen'] = imagenes_producto
+    df_dia['url'] = productos_urls
+    
+    return df_dia
 # Se escribe el contenido del dataframe a un csv
-df_dia.to_csv('ofertas/dia-ofertas.csv', sep=';', index=False)
+#df_dia.to_csv('ofertas/dia-ofertas.csv', sep=';', index=False)

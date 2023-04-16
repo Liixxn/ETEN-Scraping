@@ -59,17 +59,19 @@ def paginacion(url_carrefour):
 
     return df
 
+def scraper_carrefour():
 
-df_productos_frescos = paginacion(
-    "https://www.carrefour.es/supermercado/ofertas/N-177ap79Zwhajzd?No=0&Nr%3DAND%28product.shopCodes%3A004320%2Cproduct.salepointWithActivePrice_004320%3A1%2COR%28product.siteId%3AbasicSite%29%29OR%29=&prtId=cat20002")
-df_despensa = paginacion(
-    "https://www.carrefour.es/supermercado/ofertas/N-177ap79Zv6agxv?Nr=AND%28product.shopCodes%3A004320%2Cproduct.salepointWithActivePrice_004320%3A1%2COR%28product.siteId%3AbasicSite%29%2ConSaleSalePoints%3A004320%29&prtId=cat20001")
-df_bebidas = paginacion(
-    "https://www.carrefour.es/supermercado/ofertas/N-177ap79Zc7a800?Nr=AND%28product.shopCodes%3A004320%2Cproduct.salepointWithActivePrice_004320%3A1%2COR%28product.siteId%3AbasicSite%29%2ConSaleSalePoints%3A004320%29&prtId=cat20003")
+    df_productos_frescos = paginacion(
+        "https://www.carrefour.es/supermercado/ofertas/N-177ap79Zwhajzd?No=0&Nr%3DAND%28product.shopCodes%3A004320%2Cproduct.salepointWithActivePrice_004320%3A1%2COR%28product.siteId%3AbasicSite%29%29OR%29=&prtId=cat20002")
+    df_despensa = paginacion(
+        "https://www.carrefour.es/supermercado/ofertas/N-177ap79Zv6agxv?Nr=AND%28product.shopCodes%3A004320%2Cproduct.salepointWithActivePrice_004320%3A1%2COR%28product.siteId%3AbasicSite%29%2ConSaleSalePoints%3A004320%29&prtId=cat20001")
+    df_bebidas = paginacion(
+        "https://www.carrefour.es/supermercado/ofertas/N-177ap79Zc7a800?Nr=AND%28product.shopCodes%3A004320%2Cproduct.salepointWithActivePrice_004320%3A1%2COR%28product.siteId%3AbasicSite%29%2ConSaleSalePoints%3A004320%29&prtId=cat20003")
 
-df_ofertas = pd.concat([df_productos_frescos, df_despensa, df_bebidas])
+    df_ofertas = pd.concat([df_productos_frescos, df_despensa, df_bebidas])
+    
+    df_ofertas['price'] = df_ofertas['price'].str.replace('€', 'EUR')
+    df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', 'EUR')
 
-df_ofertas['price'] = df_ofertas['price'].str.replace('€', 'EUR')
-df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', 'EUR')
-
-df_ofertas.to_csv('ofertas/ofertas_carrefour.csv', sep=';', index=False, encoding='ISO 8859-1')
+    return df_ofertas
+#df_ofertas.to_csv('ofertas/ofertas_carrefour.csv', sep=';', index=False, encoding='ISO 8859-1')
