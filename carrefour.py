@@ -1,6 +1,7 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests
+from urllib.parse import urlparse, parse_qs
 
 header = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:87.0) Gecko/20100101 Firefox/87.0',
@@ -24,12 +25,13 @@ def paginacion(url_carrefour):
     df['price_less'] = ""
     df['url_img'] = ""
     df['url'] = ""
+    df['category'] = ""
 
     for i in pagination:
         pag = leerHtml("https://www.carrefour.es" + i['value'])
         product_cards = pag.find_all('article', {'class': 'product-card-item'})
         for card in product_cards[:-1]:
-
+                
             badge = card.find('div', {'class': 'bg-promocion-copy'})
 
             if badge is None:
@@ -50,7 +52,14 @@ def paginacion(url_carrefour):
 
                 url = card.find('a')['href']
                 url_oferta = "https://www.carrefour.es" + url
-                df.loc[len(df)] = {'titulo': name, 'price': price, 'price_less': price_less, 'url_img': image_url, 'url': url_oferta}
+                
+                parsed_url = urlparse(url)
+                
+                query_parms = parse_qs(parsed_url.query)
+                
+                prt_id = query_parms['prtId'][0]
+                    
+                df.loc[len(df)] = {'titulo': name, 'price': price, 'price_less': price_less, 'url_img': image_url, 'url': url_oferta, 'category': prt_id}
             else:
 
                 # Imprime los productos que tienen descuentos en plan 3x2 o 50% descuento
@@ -69,6 +78,10 @@ def scraper_carrefour():
         "https://www.carrefour.es/supermercado/ofertas/N-177ap79Zc7a800?Nr=AND%28product.shopCodes%3A004320%2Cproduct.salepointWithActivePrice_004320%3A1%2COR%28product.siteId%3AbasicSite%29%2ConSaleSalePoints%3A004320%29&prtId=cat20003")
 
     df_ofertas = pd.concat([df_productos_frescos, df_despensa, df_bebidas])
+    
+    df_ofertas['category'] = df_ofertas['category'].str.replace('cat20002', '1')
+    df_ofertas['category'] = df_ofertas['category'].str.replace('cat20001', '2')
+    df_ofertas['category'] = df_ofertas['category'].str.replace('cat20003', '3')
     
     df_ofertas['price'] = df_ofertas['price'].str.replace('€', 'EUR')
     df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', 'EUR')
