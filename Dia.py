@@ -13,8 +13,8 @@ url_original = 'https://www.dia.es'
 # link de la pagina web de ofertas para dia
 url = 'https://www.dia.es/compra-online/ofertas-DIA-online'
 # lista que guarda las diferentes categorias que existen en alimentacion
-words = ['/bebidas/', '/frescos/', '/congelados/', '/despensa/', '/bodega/', '/platos-preparados/']
-
+words = ['/bebidas/', '/frescos/', '/congelados/', '/despensa/', '/bodega/', '/platos-preparados/'] #P-P + Frescos ; Despensa + congelados ; Bebidas + Bodega. 
+                                                                                                        #1                    2                      3       
 # lista que guardara el numero total de paginas que hay en las ofertas
 lista_hojas_ofertas_dia = []
 # se aniade la priemra url
