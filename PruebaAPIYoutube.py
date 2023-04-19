@@ -29,7 +29,8 @@ import AnalisisSentimiento
 # API_KEY = 'AIzaSyBHmAby7HWddjhSfJLgio3STSQZ9q4aQOs' #ETEN 2 V2
 # API_KEY = 'AIzaSyBiE65QyeOcEB1J3OkbwaKnOaZCWv7IBOc' #ETEN 3 V2
 # API_KEY = 'AIzaSyC4asSJjbO32e0uySXNphACZwohx9DYpug' #ETEN 4 V2
-API_KEY = 'AIzaSyBiDR8IBpQJIkh-cDqEDQpQ86TO-qPFs_U' #ETEN 5 V2
+# API_KEY = 'AIzaSyBiDR8IBpQJIkh-cDqEDQpQ86TO-qPFs_U' #ETEN 5 V2
+API_KEY = 'AIzaSyAQexx10CmLOAAyqwm1E9lt7XcksWDuB8I' #ETEN 6 V2
 
 def obtenerComentarios(recetaBuscar):
 
@@ -137,7 +138,7 @@ datos = pd.read_csv('recetas_csv/df_hola_todo.csv',
 # Esto se utiliza para no exceder las peticiones de la api y que no de error
 # Se van ejecutando por tramos los csv
 # empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[4250:4260]
+datos_seleccionados = datos.iloc[4320:4330]
 
 for indice, fila in datos_seleccionados.iterrows():
 
