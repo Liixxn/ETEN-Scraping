@@ -1,13 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+from urllib.parse import urlparse
 
 header = {
     'User-Agent': 'Chrome 108.0.5359.125',
     'Accept-Language': 'es'
 }
 # Dataframe que guarda la informacion
-df_dia = pd.DataFrame(columns=['nombre', 'precio_original', 'precio_actual', 'imagen', 'url'])
+df_dia = pd.DataFrame(columns=['nombre', 'precio_original', 'precio_actual', 'imagen', 'url', 'categoria'])
 # link de la pagina principal de dia
 url_original = 'https://www.dia.es'
 # link de la pagina web de ofertas para dia
@@ -43,7 +44,6 @@ while (final_ofertas_dia==False):
         # Se reemplaza el link nuevo para que sea el siguiente a evaluar
         url = link_unido
 
-
         
 # listas que guardaran los diferentes productos   
 nombre_producto = []        
@@ -51,23 +51,35 @@ precios_original = []
 precios_descuento = []
 imagenes_producto = []
 productos_urls = []
+categorias_producto = []  # lista que guarda la categoría para cada producto
 
 # Se recorre la lista de hojas de las ofertas
 for link in lista_hojas_ofertas_dia:
     response = requests.get(link, headers=header)
     soup_dia_ofertas = BeautifulSoup(response.content, 'html.parser')
+    # Se obtienen todos los productos que se encuentren en
+
     # Se obtienen todos los productos que se encuentren en esa hoja
     productos = soup_dia_ofertas.find_all('div', class_="product-list__item")
 
 
-    # Se recorre cada producto para ser analziado, ya que en la pagina de ofertas tambien se encuentran elementos que no
-    # pertencen a alimentacion, por lo que se debe realizar un filtro. Para ello se va hacer uso de la lista 'words' que
-    # comprueba que en la url de cada producto aparezca alguno de esas categorias, ya que asi se puede determinar que
-    # producto pertenece a alimentacion y a que categoria.
+# Se recorre cada producto para ser analziado, ya que en la pagina de ofertas tambien se encuentran elementos que no
+# pertencen a alimentacion, por lo que se debe realizar un filtro. Para ello se va hacer uso de la lista 'words' que
+# comprueba que en la url de cada producto aparezca alguno de esas categorias, ya que asi se puede determinar que
+# producto pertenece a alimentacion y a que categoria.
+# Se recorre la lista de hojas de las ofertas
+for link in lista_hojas_ofertas_dia:
+    response = requests.get(link, headers=header)
+    soup_dia_ofertas = BeautifulSoup(response.content, 'html.parser')
+    # Se obtienen todos los productos que se encuentren en
+    # esa hoja
+    productos = soup_dia_ofertas.find_all('div', class_="product-list__item")
+
     for product in productos:
-        for word in words:
+        for i, word in enumerate(words):
             # Aqui se comprueba que exista en la url alguna de las categorias
             if word in product.find('a').get('href'):
+                
 
                 # Se obtiene el precio del producto
                 precio = product.find('p', class_='price')
@@ -90,6 +102,30 @@ for link in lista_hojas_ofertas_dia:
 
                     producto_url = product.find('a').get('href')
                     productos_urls.append(url_original+producto_url)
+                   
+                    url_tratada = urlparse(producto_url)
+                    componente = url_tratada.path.split("/")
+                    categoria = componente[2]
+                    categorias_producto.append(categoria)
+
+
+
+
+
+df_dia = pd.DataFrame({'nombre': nombre_producto, 
+                       'precio_original': precios_original, 
+                       'precio_actual': precios_descuento, 
+                       'imagen': imagenes_producto, 
+                       'url': productos_urls, 
+                       'categoria': categorias_producto})
+
+df_dia["categoria"] = df_dia["categoria"].str.replace("bodega", "3")
+df_dia["categoria"] = df_dia["categoria"].str.replace("bebidas", "3")
+df_dia["categoria"] = df_dia["categoria"].str.replace("platos-preparados", "1")
+df_dia["categoria"] = df_dia["categoria"].str.replace("frescos", "1")
+df_dia["categoria"] = df_dia["categoria"].str.replace("congelados", "2")
+df_dia["categoria"] = df_dia["categoria"].str.replace("despensa", "2")
+pd.set_option('display.max_rows', None)
 
 def scraper_dia():
     df_dia['nombre'] = nombre_producto
@@ -97,7 +133,9 @@ def scraper_dia():
     df_dia['precio_actual'] = precios_descuento
     df_dia['imagen'] = imagenes_producto
     df_dia['url'] = productos_urls
+    df_dia['categoria'] = categorias_producto
     
     return df_dia
+
 # Se escribe el contenido del dataframe a un csv
 #df_dia.to_csv('ofertas/dia-ofertas.csv', sep=';', index=False)
