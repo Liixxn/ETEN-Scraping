@@ -79,8 +79,11 @@ def scraper_carrefour():
 
     df_ofertas = pd.concat([df_productos_frescos, df_despensa, df_bebidas])
     
+    #Productos frescos
     df_ofertas['category'] = df_ofertas['category'].str.replace('cat20002', '1')
+    #Despensa
     df_ofertas['category'] = df_ofertas['category'].str.replace('cat20001', '2')
+    #Bebidas
     df_ofertas['category'] = df_ofertas['category'].str.replace('cat20003', '3')
     
     df_ofertas['price'] = df_ofertas['price'].str.replace('€', 'EUR')
