@@ -87,7 +87,6 @@ for link in lista_hojas_ofertas_dia:
                     # Se obtiene la imagen del producto
                     imagen = product.find('img', class_="crispImage").get('src')
                     imagenes_producto.append(imagen)
-
                     producto_url = product.find('a').get('href')
                     productos_urls.append(url_original+producto_url)
 

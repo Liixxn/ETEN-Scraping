@@ -16,7 +16,7 @@ def main():
     df_dia['precio_actual'] = df_dia['precio_actual'].str.replace('€', 'EUR')
     
     # Renombrar las columnas de df_dia para que coincidan con las de df_carrefour
-    df_dia.columns = ['titulo', 'price', 'price_less', 'url_img', 'url']
+    df_dia.columns = ['titulo', 'price', 'price_less', 'url_img', 'url', 'category']
     
     # Concatenar los dos DataFrames
     df_concatenado = pd.concat([df_carrefour, df_dia], ignore_index=True)
