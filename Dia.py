@@ -121,8 +121,6 @@ df_dia["categoria"] = df_dia["categoria"].str.replace("platos-preparados", "1")
 df_dia["categoria"] = df_dia["categoria"].str.replace("frescos", "1")
 df_dia["categoria"] = df_dia["categoria"].str.replace("congelados", "2")
 df_dia["categoria"] = df_dia["categoria"].str.replace("despensa", "2")
-pd.set_option('display.max_rows', None)
-
 
 def scraper_dia():
     df_dia['nombre'] = nombre_producto
