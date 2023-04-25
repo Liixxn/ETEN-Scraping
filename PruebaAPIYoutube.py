@@ -21,17 +21,36 @@ import AnalisisSentimiento
 # API_KEY = 'AIzaSyB93IGtw5_nuRhcImpAGWRhUc7ranbg6LE' NO USAR ESTA NO FUNCIONA   #ETEN 11
 # API_KEY = 'AIzaSyDNIAo7tZbaWzv2wPZfsSybzjmEIn8Irbg'  #ETEN 10
 # API_KEY = 'AIzaSyDWHjnOU4-mTntPZHd4-C8qYuYnUGHzW9Y' NO USAR ESTA NO FUNCIONA #ETEN 12
-
-API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
-# API_KEY = 'AIzaSyDSYGd1W9HHIofRBr-DjZLG_GUlbDqLNxQ' # Rober
-# API_KEY = 'AIzaSyCs6FGPDPU_EwzwZ-t9rLimZMUcW4BNj80'
-# API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
-# API_KEY = 'AIzaSyD6ekizqDFNazha_sNZd-00-KcaKnp_tNc' #ETEN 1 V2
+# API_KEY = 'AIzaSyD6ekizqDFNazha_sNZd-00-KcaKnp_tNc' NO USAR ESTA NO FUNCIONA #ETEN 1 V2
 # API_KEY = 'AIzaSyBHmAby7HWddjhSfJLgio3STSQZ9q4aQOs' #ETEN 2 V2
 # API_KEY = 'AIzaSyBiE65QyeOcEB1J3OkbwaKnOaZCWv7IBOc' #ETEN 3 V2
 # API_KEY = 'AIzaSyC4asSJjbO32e0uySXNphACZwohx9DYpug' #ETEN 4 V2
 # API_KEY = 'AIzaSyBiDR8IBpQJIkh-cDqEDQpQ86TO-qPFs_U' #ETEN 5 V2
 # API_KEY = 'AIzaSyAQexx10CmLOAAyqwm1E9lt7XcksWDuB8I' #ETEN 6 V2
+
+
+# API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
+# API_KEY = 'AIzaSyDSYGd1W9HHIofRBr-DjZLG_GUlbDqLNxQ' # Rober
+# API_KEY = 'AIzaSyCs6FGPDPU_EwzwZ-t9rLimZMUcW4BNj80'
+# API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
+# API_KEY = 'AIzaSyA8wfXv49JRIExaqxij2rCCfW27czY7PyI' #ETEN 7 V2
+# API_KEY = 'AIzaSyDYIw9k9YvZyd5b0RxQ6-_NSqbFgFuhAkw' #ETEN 8 V2
+# API_KEY = 'AIzaSyCopAl4t4oVUjYhQXyiH1tb2tuFYHa1KYo' #ETEN 9 V2
+# API_KEY = 'AIzaSyCeSejd5nETIuEQkrahRHxZ46GLL_DK0YQ' #ETEN 10 V2
+# API_KEY = 'AIzaSyAHh7-4RzVrRNqab-3iaU2KOlOalpeaSsA' #ETEN 11 V2
+# API_KEY = 'AIzaSyAxj5mMSqMDkZS7eXm1zS_0trbQxhqFox8' #ETEN 12 V2
+# API_KEY = 'AIzaSyDb-86QdtAwrZCJMkhgcJ7w_tZqzQz-stA' #ETEN 1 V3
+# API_KEY = 'AIzaSyB2BeWLY8wcgfsemfNYt1MS7D6TgVe0abw' #ETEN 2 V3
+# API_KEY = 'AIzaSyBM_DJJpFbivg_puvK2dvEkRGhm2Bc95X0' #ETEN 3 V3
+# API_KEY = 'AIzaSyCVCmvfHJSAFJCyZAh3y1Gm6aWCqQY0kLc' #ETEN 4 V3
+API_KEY = 'AIzaSyACv6RqbK6ZpnO63s_4FTqcX067zk5zqlQ' #ETEN 5 V3
+# API_KEY = 'AIzaSyC86hUyS-otknYht8lSvTzMNwr-fj36j6A' #ETEN 6 V3
+# API_KEY = 'AIzaSyA961vapEzZja2d12bf6wqHIgm_SmIOa6A' #ETEN 7 V3
+# API_KEY = 'AIzaSyCW2CQIn54WiFI5WnYiJZIN2yVpRNsVXs8' #ETEN 8 V3
+# API_KEY = '' #ETEN 9 V3
+# API_KEY = '' #ETEN 10 V3
+# API_KEY = '' #ETEN 11 V3
+# API_KEY = '' #ETEN 12 V3
 
 def obtenerComentarios(recetaBuscar):
 
@@ -139,7 +158,7 @@ datos = pd.read_csv('recetas_csv/df_hola_todo.csv',
 # Esto se utiliza para no exceder las peticiones de la api y que no de error
 # Se van ejecutando por tramos los csv
 # empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[5670:5740]
+datos_seleccionados = datos.iloc[6520:6524]
 
 for indice, fila in datos_seleccionados.iterrows():
 
