@@ -34,7 +34,7 @@ import AnalisisSentimiento
 # API_KEY = 'AIzaSyCs6FGPDPU_EwzwZ-t9rLimZMUcW4BNj80'
 # API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
 # API_KEY = 'AIzaSyA8wfXv49JRIExaqxij2rCCfW27czY7PyI' #ETEN 7 V2
-# API_KEY = 'AIzaSyDYIw9k9YvZyd5b0RxQ6-_NSqbFgFuhAkw' #ETEN 8 V2
+API_KEY = 'AIzaSyDYIw9k9YvZyd5b0RxQ6-_NSqbFgFuhAkw' #ETEN 8 V2
 # API_KEY = 'AIzaSyCopAl4t4oVUjYhQXyiH1tb2tuFYHa1KYo' #ETEN 9 V2
 # API_KEY = 'AIzaSyCeSejd5nETIuEQkrahRHxZ46GLL_DK0YQ' #ETEN 10 V2
 # API_KEY = 'AIzaSyAHh7-4RzVrRNqab-3iaU2KOlOalpeaSsA' #ETEN 11 V2
@@ -43,14 +43,14 @@ import AnalisisSentimiento
 # API_KEY = 'AIzaSyB2BeWLY8wcgfsemfNYt1MS7D6TgVe0abw' #ETEN 2 V3
 # API_KEY = 'AIzaSyBM_DJJpFbivg_puvK2dvEkRGhm2Bc95X0' #ETEN 3 V3
 # API_KEY = 'AIzaSyCVCmvfHJSAFJCyZAh3y1Gm6aWCqQY0kLc' #ETEN 4 V3
-API_KEY = 'AIzaSyACv6RqbK6ZpnO63s_4FTqcX067zk5zqlQ' #ETEN 5 V3
+# API_KEY = 'AIzaSyACv6RqbK6ZpnO63s_4FTqcX067zk5zqlQ' #ETEN 5 V3
 # API_KEY = 'AIzaSyC86hUyS-otknYht8lSvTzMNwr-fj36j6A' #ETEN 6 V3
 # API_KEY = 'AIzaSyA961vapEzZja2d12bf6wqHIgm_SmIOa6A' #ETEN 7 V3
 # API_KEY = 'AIzaSyCW2CQIn54WiFI5WnYiJZIN2yVpRNsVXs8' #ETEN 8 V3
-# API_KEY = '' #ETEN 9 V3
-# API_KEY = '' #ETEN 10 V3
-# API_KEY = '' #ETEN 11 V3
-# API_KEY = '' #ETEN 12 V3
+# API_KEY = 'AIzaSyDfGzMMQi5Kk2c-5fmVlOJHu8HWW2iZO6Y' #ETEN 9 V3
+# API_KEY = 'AIzaSyBnruy1PukSyB5r_aAoZmQ7UtmtvuZgRSw' #ETEN 10 V3
+# API_KEY = 'AIzaSyCGGupT8tR4QNhDzEuBwWUmoggd8E2W3KM' #ETEN 11 V3
+# API_KEY = 'AIzaSyA8uGQQEUvLfenpgyi20GKUAOYlgOfCT6U' #ETEN 12 V3
 
 def obtenerComentarios(recetaBuscar):
 
@@ -152,13 +152,13 @@ def obtenerComentarios(recetaBuscar):
 # clean(text,no_emoji=True)
 
 
-datos = pd.read_csv('recetas_csv/df_hola_todo.csv',
+datos = pd.read_csv('recetas_csv/df_recetas_gratis_v2.csv',
                     delimiter=';')
 
 # Esto se utiliza para no exceder las peticiones de la api y que no de error
 # Se van ejecutando por tramos los csv
 # empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[6520:6524]
+datos_seleccionados = datos.iloc[860:930]
 
 for indice, fila in datos_seleccionados.iterrows():
 
@@ -172,4 +172,4 @@ for indice, fila in datos_seleccionados.iterrows():
     datos.at[indice, 'sentimientoNeg'] = sentimientoNeg
 
 
-datos.to_csv('recetas_csv/df_hola_todo.csv', sep=";", index=False)
+datos.to_csv('recetas_csv/df_recetas_gratis_v2.csv', sep=";", index=False)
