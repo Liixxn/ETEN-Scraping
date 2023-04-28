@@ -12,14 +12,16 @@ def main():
     # Llama a la función de scraping de DIA y guarda el resultado en un DataFrame
     df_dia = scraper_dia()
     
-    df_dia['precio_original'] = df_dia['precio_original'].str.replace('€', 'EUR')
-    df_dia['precio_actual'] = df_dia['precio_actual'].str.replace('€', 'EUR')
+    df_dia['precioAnterior'] = df_dia['precioAnterior'].str.replace('€', 'EUR')
+    df_dia['precioActual'] = df_dia['precioActual'].str.replace('€', 'EUR')
     
     # Renombrar las columnas de df_dia para que coincidan con las de df_carrefour
-    df_dia.columns = ['titulo', 'price', 'price_less', 'url_img', 'url']
-    
+    #df_dia.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
+    #df_carrefour.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
+
     # Concatenar los dos DataFrames
-    df_concatenado = pd.concat([df_carrefour, df_dia], ignore_index=True)
+    
+    df_concatenado = pd.merge(df_carrefour, df_dia, how='outer')
     
     # Guarda el DataFrame concatenado en un archivo CSV
     df_concatenado.to_csv('ofertas/ofertas_concatenadas.csv', sep=';', index=False, encoding='ISO 8859-1')
