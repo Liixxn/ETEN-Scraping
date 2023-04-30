@@ -9,7 +9,7 @@ import procesamientoTexto
 df_clasificacion = pd.DataFrame(columns=["Receta", "Categoria"])
 
 def leerRecetasUnlabeled():
-    df_recetas_online = pd.read_csv("recetas_csv/df_recetas_online.csv", sep=";")
+    df_recetas_online = pd.read_csv("recetas_csv/df_hola_todo.csv", sep=";")
 
 
     listaRecetasContenido = []
@@ -35,9 +35,9 @@ for i in range(len(df_stem["Receta"])):
 
 Y_pred = cargaModelo.predict(df_stem['Receta'])
 listaPredicciones = Y_pred.tolist()
-df_recetas = pd.read_csv("recetas_csv/df_recetas_online.csv", sep=";")
+df_recetas = pd.read_csv("recetas_csv/df_hola_todo.csv", sep=";")
 df_recetas["Categoria"] = listaPredicciones
-df_recetas.to_csv("recetas_csv/df_recetas_online.csv", sep=";", index=False)
+df_recetas.to_csv("recetas_csv/df_hola_todo.csv", sep=";", index=False)
 
 
 

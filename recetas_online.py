@@ -162,6 +162,8 @@ def obtenerDatosReceta(recetas_x_categoria):
             lista_temp_pasos.append(list_pasos_recetas_online[paso].get_text())
         pasos_porReceta_recetas_online.append(lista_temp_pasos)
 
+        # Esta parte es para obtener la informacion de los comentarios de cada receta, no se recomienda hacerlo
+
         # if titulo_receta == "Sin Informacion":
         #     lista_sentimientoPositivos.append("Sin Informacion")
         #     lista_sentimientoNegativos.append("Sin Informacion")

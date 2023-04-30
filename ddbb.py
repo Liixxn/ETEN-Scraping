@@ -1,10 +1,12 @@
+import math
+
 import mysql.connector
 import pandas as pd
 from numpy import double
 import re
 import pymysql
 
-df = pd.read_csv("recetas_csv/df_recetas_online.csv", sep=";")
+df = pd.read_csv("recetas_csv/df_hola_todo.csv", sep=";")
 
 
 conn = pymysql.connect(host='195.235.211.197', user='pc2_grupo3', password='PComputacion.23', database='pc2_grupo3')
@@ -21,13 +23,17 @@ if len(resultados) > 0:
     for receta in range(len(df["titulo"])):
         recetaEncontrada = False
         final = 0
+        print("Receta: " + str(df["titulo"][receta]))
         while(recetaEncontrada==False and final < len(resultados)):
             if (df["titulo"][receta] == resultados[final][2]) and (df["imagen"][receta] == resultados[final][4]):
                 recetaEncontrada = True
+                print("Receta encontrada: " + str(receta))
             else:
                 final += 1
+                print("Receta no encontrada: " + str(receta))
 
         if recetaEncontrada == False:
+            print("se inserta")
             sql = "INSERT INTO recetas (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo, sentimiento_pos, sentimiento_neg) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
             categoria = str(df["Categoria"][receta])
             titulo = str(df["titulo"][receta])
@@ -47,6 +53,11 @@ if len(resultados) > 0:
             activo = 1
             sentimiento_pos = float(df["sentimientoPos"][receta])
             sentimiento_neg = float(df["sentimientoNeg"][receta])
+
+            if (math.isnan(sentimiento_pos) and math.isnan(sentimiento_neg)):
+                sentimiento_pos = 0.0
+                sentimiento_neg = 0.0
+
 
             val = (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo,
                    sentimiento_pos, sentimiento_neg)
@@ -69,7 +80,7 @@ if len(resultados) > 0:
 
 
 else:
-    for i in range(len(df[:2])):
+    for i in range(len(df["titulo"])):
         sql = "INSERT INTO recetas (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo, sentimiento_pos, sentimiento_neg) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
         categoria = str(df["Categoria"][i])
         titulo = str(df["titulo"][i])
@@ -89,6 +100,12 @@ else:
         activo = 1
         sentimiento_pos = float(df["sentimientoPos"][i])
         sentimiento_neg = float(df["sentimientoNeg"][i])
+
+        if (math.isnan(sentimiento_pos) and math.isnan(sentimiento_neg)):
+            sentimiento_pos = 0.0
+            sentimiento_neg = 0.0
+
+
 
         val = (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo, sentimiento_pos, sentimiento_neg)
         cursor.execute(sql, val)
