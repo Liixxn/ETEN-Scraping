@@ -39,14 +39,33 @@ if len(resultados) > 0:
             titulo = str(df["titulo"][receta])
             descripcion = str(df["pasos"][receta])
             img = str(df["imagen"][receta])
-
             ingredientes = df["ingredientes"][receta]
+
+
+            # # PARA EL DE RECETAS ONLINE
+            # ingredientes = ingredientes.replace("[", "").replace("]", "")
+            # arrayIngredientes = ingredientes.split("', '")
+            #
+            # arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
+            # arrayIngredientes[len(arrayIngredientes) - 1] = arrayIngredientes[len(arrayIngredientes) - 1].replace("'",
+            #                                                                                                       "")
+
+
+
+            # PARA EL DE RECETAS HOLA
             ingredientes = ingredientes.replace("[", "").replace("]", "")
+            # esto para el de df_hola_todo.csv
             arrayIngredientes = ingredientes.split("', '")
 
             arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
             arrayIngredientes[len(arrayIngredientes) - 1] = arrayIngredientes[len(arrayIngredientes) - 1].replace("'",
                                                                                                                   "")
+
+
+
+
+
+
             duracion = str(df["duracion"][receta])
             comensales = str(df["comensales"][receta])
             dificultad = str(df["dificultad"][receta])
@@ -88,11 +107,24 @@ else:
         img = str(df["imagen"][i])
 
         ingredientes = df["ingredientes"][i]
+        # ingredientes = ingredientes.replace("[", "").replace("]", "")
+        # arrayIngredientes = ingredientes.split("', '")
+        #
+        # arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
+        # arrayIngredientes[len(arrayIngredientes)-1] = arrayIngredientes[len(arrayIngredientes)-1].replace("'", "")
+
+
+
+
+        ## PARA EL DE RECETAS HOLA
         ingredientes = ingredientes.replace("[", "").replace("]", "")
+        # esto para el de df_hola_todo.csv
         arrayIngredientes = ingredientes.split("', '")
 
         arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
-        arrayIngredientes[len(arrayIngredientes)-1] = arrayIngredientes[len(arrayIngredientes)-1].replace("'", "")
+        arrayIngredientes[len(arrayIngredientes) - 1] = arrayIngredientes[len(arrayIngredientes) - 1].replace("'",
+                                                                                                              "")
+
 
         duracion = str(df["duracion"][i])
         comensales = str(df["comensales"][i])
