@@ -85,9 +85,15 @@ def scraper_carrefour():
     df_ofertas['category'] = df_ofertas['category'].str.replace('cat20001', '2')
     #Bebidas
     df_ofertas['category'] = df_ofertas['category'].str.replace('cat20003', '3')
-    
-    df_ofertas['price'] = df_ofertas['price'].str.replace('€', 'EUR')
-    df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', 'EUR')
+    df_ofertas['price'] = df_ofertas['price'].str.replace('€', '').str.strip()
+    df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', '').str.strip()
+    df_ofertas['price'] = df_ofertas['price'].str.replace(',', '.').str.strip()
+    df_ofertas['price_less'] = df_ofertas['price_less'].str.replace(',', '.').str.strip()
+   
+    #df_ofertas['price'] = df_ofertas['price'].str.replace('€', '')
+    #df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', '')
+    #df_ofertas['price'] = str(df_ofertas['price']).trim()
+    #df_ofertas['price_less'] = str(df_ofertas['price_less']).str.trim()
     
     df_ofertas.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
 

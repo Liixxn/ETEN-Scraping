@@ -45,8 +45,8 @@ else:
     for oferta in range(len(df[:2])):
         sql = "INSERT INTO ofertas (nombreOferta, precioActual, precioAnterior, imagenOferta, urlOferta, categoria) VALUES (%s, %s, %s, %s, %s, %s);"
         nombreOferta = str(df["nombreOferta"][oferta])
-        precioActual = str(df["precioActual"][oferta])
-        precioAnterior = str(df["precioAnterior"][oferta])
+        precioActual = double(df["precioActual"][oferta])
+        precioAnterior = double(df["precioAnterior"][oferta])
         imagenOferta = str(df["imagenOferta"][oferta])
         urlOferta = str(df["urlOferta"][oferta])
         categoria = str(df["categoria"][oferta])

@@ -11,13 +11,19 @@ def main():
     
     # Llama a la función de scraping de DIA y guarda el resultado en un DataFrame
     df_dia = scraper_dia()
-    
-    df_dia['precioAnterior'] = df_dia['precioAnterior'].str.replace('€', 'EUR')
-    df_dia['precioActual'] = df_dia['precioActual'].str.replace('€', 'EUR')
+    df_dia['precioAnterior'] = df_dia['precioAnterior'].str.replace('€', '').str.strip()
+    df_dia['precioActual'] = df_dia['precioActual'].str.replace('€', '').str.strip()
+    df_dia['precioAnterior'] = df_dia['precioAnterior'].str.replace(',', '.').str.strip()
+    df_dia['precioActual'] = df_dia['precioActual'].str.replace(',', '.').str.strip()
+    #df_dia['precioAnterior'] = df_dia['precioAnterior'].str.replace('€', '')
+    #df_dia['precioActual'] = df_dia['precioActual'].str.replace('€', '')
+    #df_dia['precioAnterior'] = str(df_dia['precioAnterior']).trim()
+    #df_dia['precioActual'] =str(df_dia['precioActual']).str.trim()
+
     
     # Renombrar las columnas de df_dia para que coincidan con las de df_carrefour
-    #df_dia.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
-    #df_carrefour.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
+    df_dia.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
+    df_carrefour.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
 
     # Concatenar los dos DataFrames
     
