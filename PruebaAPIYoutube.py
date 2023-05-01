@@ -7,7 +7,7 @@ import pandas as pd
 import AnalisisSentimiento
 
 
-# Inicializamos la variable que contiene la key de la api con nuestra cuenta de loffelsoftwares@gmail.com
+# NO FUNCIONALES
 # API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U' PERMISO DENEGADO # Loffel
 # API_KEY = 'AIzaSyBDkbGwmJ7siXkT9l6q7CMaz_IYB2jPJZ4' NO USAR ESTA NO FUNCIONA 
 # API_KEY = 'AIzaSyDu24NEirW1WDcMk564p8o8XALiLDU6jEM' NO USAR ESTA NO FUNCIONA  #ETEN 2 
@@ -27,14 +27,8 @@ import AnalisisSentimiento
 # API_KEY = 'AIzaSyC4asSJjbO32e0uySXNphACZwohx9DYpug' #ETEN 4 V2
 # API_KEY = 'AIzaSyBiDR8IBpQJIkh-cDqEDQpQ86TO-qPFs_U' #ETEN 5 V2
 # API_KEY = 'AIzaSyAQexx10CmLOAAyqwm1E9lt7XcksWDuB8I' #ETEN 6 V2
-
-
-# API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
-# API_KEY = 'AIzaSyDSYGd1W9HHIofRBr-DjZLG_GUlbDqLNxQ' # Rober
-# API_KEY = 'AIzaSyCs6FGPDPU_EwzwZ-t9rLimZMUcW4BNj80'
-# API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
 # API_KEY = 'AIzaSyA8wfXv49JRIExaqxij2rCCfW27czY7PyI' #ETEN 7 V2
-API_KEY = 'AIzaSyDYIw9k9YvZyd5b0RxQ6-_NSqbFgFuhAkw' #ETEN 8 V2
+# API_KEY = 'AIzaSyDYIw9k9YvZyd5b0RxQ6-_NSqbFgFuhAkw' #ETEN 8 V2
 # API_KEY = 'AIzaSyCopAl4t4oVUjYhQXyiH1tb2tuFYHa1KYo' #ETEN 9 V2
 # API_KEY = 'AIzaSyCeSejd5nETIuEQkrahRHxZ46GLL_DK0YQ' #ETEN 10 V2
 # API_KEY = 'AIzaSyAHh7-4RzVrRNqab-3iaU2KOlOalpeaSsA' #ETEN 11 V2
@@ -47,10 +41,31 @@ API_KEY = 'AIzaSyDYIw9k9YvZyd5b0RxQ6-_NSqbFgFuhAkw' #ETEN 8 V2
 # API_KEY = 'AIzaSyC86hUyS-otknYht8lSvTzMNwr-fj36j6A' #ETEN 6 V3
 # API_KEY = 'AIzaSyA961vapEzZja2d12bf6wqHIgm_SmIOa6A' #ETEN 7 V3
 # API_KEY = 'AIzaSyCW2CQIn54WiFI5WnYiJZIN2yVpRNsVXs8' #ETEN 8 V3
+
+
+# FUNCIONALES
+# API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
+# API_KEY = 'AIzaSyDSYGd1W9HHIofRBr-DjZLG_GUlbDqLNxQ' # Rober
+# API_KEY = 'AIzaSyCs6FGPDPU_EwzwZ-t9rLimZMUcW4BNj80'
+# API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
 # API_KEY = 'AIzaSyDfGzMMQi5Kk2c-5fmVlOJHu8HWW2iZO6Y' #ETEN 9 V3
 # API_KEY = 'AIzaSyBnruy1PukSyB5r_aAoZmQ7UtmtvuZgRSw' #ETEN 10 V3
 # API_KEY = 'AIzaSyCGGupT8tR4QNhDzEuBwWUmoggd8E2W3KM' #ETEN 11 V3
 # API_KEY = 'AIzaSyA8uGQQEUvLfenpgyi20GKUAOYlgOfCT6U' #ETEN 12 V3
+# API_KEY = 'AIzaSyArVm4ZLq8YdXAIzA3j-qTQ1VEwnrK--fg' #ETEN 1 V4
+# API_KEY = 'AIzaSyCpJd-1d941mrg1BAgHf2dMrOJxFv-rtCc' #ETEN 2 V4
+# API_KEY = 'AIzaSyDo3cO16DZ5Na9xQ9eA6tZKkqYPYiNpJRM' #ETEN 3 V4
+# API_KEY = 'AIzaSyAelcnQ7ingeJj-DVRv1b1SK1Sqy47wX_Y' #ETEN 4 V4
+# API_KEY = 'AIzaSyAK99V7N8gNxYKjtYBUApVV8GlZ24uQqtQ' #ETEN 5 V4
+API_KEY = 'AIzaSyDofqndIUq4f9Ghni8WPxTRGDT966bVBJg' #ETEN 6 V4
+# API_KEY = '' #ETEN 7 V4
+# API_KEY = '' #ETEN 8 V4
+# API_KEY = '' #ETEN 9 V4
+# API_KEY = '' #ETEN 10 V4
+# API_KEY = '' #ETEN 11 V4
+# API_KEY = '' #ETEN 12 V4
+
+
 
 def obtenerComentarios(recetaBuscar):
 
@@ -158,11 +173,10 @@ datos = pd.read_csv('recetas_csv/df_recetas_gratis_v2.csv',
 # Esto se utiliza para no exceder las peticiones de la api y que no de error
 # Se van ejecutando por tramos los csv
 # empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[860:930]
+datos_seleccionados = datos.iloc[3240:3250]
 
 for indice, fila in datos_seleccionados.iterrows():
 
-    # print(indice)
     titulo_recetas = fila['titulo']
     print(titulo_recetas)
     obtenerComentarios(titulo_recetas)
