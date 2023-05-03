@@ -69,13 +69,25 @@ import AnalisisSentimiento
 # API_KEY = 'AIzaSyC-snXhlTns2ZrnP3vr9upeswmDD9LIBlM' #ETEN 3 V5
 # API_KEY = 'AIzaSyCL3FSm18c0UO28BTBUC2NA5DuWyc2vyyY' #ETEN 4 V5
 # API_KEY = 'AIzaSyBbk2dw5qt1ETxcvzh_nZRwOEqsL_gwRNw' #ETEN 5 V5
-API_KEY = 'AIzaSyDv9_mo8IdBIklN20wORDgkGzQu6teTU9k' #ETEN 6 V5
-# API_KEY = '' #ETEN 7 V5
-# API_KEY = '' #ETEN 8 V5
-# API_KEY = '' #ETEN 9 V5
-# API_KEY = '' #ETEN 10 V5
-# API_KEY = '' #ETEN 11 V5
-# API_KEY = '' #ETEN 12 V5
+# API_KEY = 'AIzaSyDv9_mo8IdBIklN20wORDgkGzQu6teTU9k' #ETEN 6 V5
+# API_KEY = 'AIzaSyB7FTSCTRYf3fQN0decCbbixJYotenACFI' #ETEN 7 V5
+# API_KEY = 'AIzaSyAksyuCY6tJsdnTjll4XejtkwWAaJRX2Nw' #ETEN 8 V5
+# API_KEY = 'AIzaSyDTiW4sqh0Y-SBi_xK5u7iSTBpW-4HsW4c' #ETEN 9 V5
+# API_KEY = 'AIzaSyCYNBMCFaKTXIWuKRX1aNDiDv5Klkh96n4' #ETEN 10 V5
+# API_KEY = 'AIzaSyBNEE7B-L0cYWMUOi4M4APy3N58nIDzvxc' #ETEN 11 V5
+# API_KEY = 'AIzaSyD4yFrL8rmCKxxv0nRQ8ICYEVLXyEpGnMU' #ETEN 12 V5
+# API_KEY = 'AIzaSyD4SxKCeiZnZOuT4SUKpoPHexGdRP1kQY4' #ETEN 1 V6
+# API_KEY = 'AIzaSyDJPsUU37faieSXmUEkXqOJhMPNsUwuuX8' #ETEN 2 V6
+# API_KEY = 'AIzaSyCH2ONUvVTjX92NCWKEjv875QZBlIquGVw' #ETEN 3 V6
+# API_KEY = 'AIzaSyCwE3NsDHa5RJ1M3AGtD4VlFiAaNSUjk0o' #ETEN 4 V6
+# API_KEY = 'AIzaSyAVek_49MQ2FYDSpMIGUN1YZgI_H_vb_wA' #ETEN 5 V6
+API_KEY = 'AIzaSyC6uKj5nO4fVmhsjuKyTQswR4knTxTBZrQ' #ETEN 6 V6
+# API_KEY = '' #ETEN 7 V6
+# API_KEY = '' #ETEN 8 V6
+# API_KEY = '' #ETEN 9 V6
+# API_KEY = '' #ETEN 10 V6
+# API_KEY = '' #ETEN 11 V6
+# API_KEY = '' #ETEN 12 V6
 
 
 
@@ -185,7 +197,7 @@ datos = pd.read_csv('recetas_csv/df_recetas_gratis_v2.csv',
 # Esto se utiliza para no exceder las peticiones de la api y que no de error
 # Se van ejecutando por tramos los csv
 # empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[4900:4910]
+datos_seleccionados = datos.iloc[5900:5910]
 
 for indice, fila in datos_seleccionados.iterrows():
 
