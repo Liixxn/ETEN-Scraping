@@ -89,7 +89,9 @@ def scraper_carrefour():
     df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', '').str.strip()
     df_ofertas['price'] = df_ofertas['price'].str.replace(',', '.').str.strip()
     df_ofertas['price_less'] = df_ofertas['price_less'].str.replace(',', '.').str.strip()
-   
+    df_ofertas['price'] = df_ofertas['price'].astype(float)
+    df_ofertas['price_less'] = df_ofertas['price_less'].astype(float)
+    
     #df_ofertas['price'] = df_ofertas['price'].str.replace('€', '')
     #df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', '')
     #df_ofertas['price'] = str(df_ofertas['price']).trim()

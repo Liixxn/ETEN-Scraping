@@ -119,24 +119,26 @@ df_dia = pd.DataFrame({'nombre': nombre_producto,
                        'url': productos_urls, 
                        'categoria': categorias_producto})
 
-df_dia["categoria"] = df_dia["categoria"].str.replace("bodega", "3")
-df_dia["categoria"] = df_dia["categoria"].str.replace("bebidas", "3")
-df_dia["categoria"] = df_dia["categoria"].str.replace("platos-preparados", "1")
-df_dia["categoria"] = df_dia["categoria"].str.replace("frescos", "1")
-df_dia["categoria"] = df_dia["categoria"].str.replace("congelados", "2")
-df_dia["categoria"] = df_dia["categoria"].str.replace("despensa", "2")
 pd.set_option('display.max_rows', None)
 
 def scraper_dia():
+
     df_dia['nombre'] = nombre_producto
     df_dia['precio_original'] = precios_original
     df_dia['precio_actual'] = precios_descuento
     df_dia['imagen'] = imagenes_producto
     df_dia['url'] = productos_urls
     df_dia['categoria'] = categorias_producto
-    
+     
+    df_dia["categoria"] = df_dia["categoria"].str.replace("bodega", "3")
+    df_dia["categoria"] = df_dia["categoria"].str.replace("bebidas", "3")
+    df_dia["categoria"] = df_dia["categoria"].str.replace("platos-preparados", "1")
+    df_dia["categoria"] = df_dia["categoria"].str.replace("frescos", "1")
+    df_dia["categoria"] = df_dia["categoria"].str.replace("congelados", "2")
+    df_dia["categoria"] = df_dia["categoria"].str.replace("despensa", "2")
+
     df_dia.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
     return df_dia
-
+    
 # Se escribe el contenido del dataframe a un csv
 #df_dia.to_csv('ofertas/dia-ofertas.csv', sep=';', index=False)
