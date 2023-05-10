@@ -9,8 +9,8 @@ import AnalisisSentimiento
 
 # NO FUNCIONALES
 # API_KEY = 'AIzaSyD8vdwq8_SmkGaTSSVJGc4Fzs2w7OGfc7U' PERMISO DENEGADO # Loffel
-# API_KEY = 'AIzaSyBDkbGwmJ7siXkT9l6q7CMaz_IYB2jPJZ4' NO USAR ESTA NO FUNCIONA 
-# API_KEY = 'AIzaSyDu24NEirW1WDcMk564p8o8XALiLDU6jEM' NO USAR ESTA NO FUNCIONA  #ETEN 2 
+# API_KEY = 'AIzaSyBDkbGwmJ7siXkT9l6q7CMaz_IYB2jPJZ4' NO USAR ESTA NO FUNCIONA
+# API_KEY = 'AIzaSyDu24NEirW1WDcMk564p8o8XALiLDU6jEM' NO USAR ESTA NO FUNCIONA  #ETEN 2
 # API_KEY = 'AIzaSyD4Dx59fJ4SkuYo4cdmNFLiqa4aRgVDThg' NO USAR ESTA NO FUNCIONA  #ETEN 3
 # API_KEY = 'AIzaSyDJnC9nAKtb9PUwXNccit-YtrJXmSxXfLo' NO USAR ESTA NO FUNCIONA  #ETEN 4
 # API_KEY = 'AIzaSyBrk6zx8jN9ffdkbyQZv6f0cVqXPizvK-Q' NO USAR ESTA NO FUNCIONA  #ETEN 5
@@ -82,6 +82,7 @@ import AnalisisSentimiento
 # API_KEY = 'AIzaSyBnruy1PukSyB5r_aAoZmQ7UtmtvuZgRSw' #ETEN 10 V3
 # API_KEY = 'AIzaSyCGGupT8tR4QNhDzEuBwWUmoggd8E2W3KM' #ETEN 11 V3
 # API_KEY = 'AIzaSyA8uGQQEUvLfenpgyi20GKUAOYlgOfCT6U' #ETEN 12 V3
+
 # API_KEY = 'AIzaSyBrYlEOY_pC1nWsA_80z1B2s1MspX-4JbI' #ETEN 7 V6
 # API_KEY = 'AIzaSyAi_gMMCJ41jZy1opH2IU5duz5XaNvGSpQ' #ETEN 8 V6
 # API_KEY = 'AIzaSyBDjdfGQ-JghABzhIiJtTreAf1LeLuBPXU' #ETEN 9 V6
@@ -99,7 +100,17 @@ import AnalisisSentimiento
 # API_KEY = 'AIzaSyC7fjU_tyZF9ooIpYLqpTf_r5LbtaGT0CU' #ETEN 9 V7
 # API_KEY = 'AIzaSyDbopTGy2oaK742rQqlzF0mQb3zNRQ8f5g' #ETEN 10 V7
 # API_KEY = 'AIzaSyDUK1ZWGHhDXLDTUYiC5HlyHs4hhH85e4o' #ETEN 11 V7
-API_KEY = 'AIzaSyAIyxRxl-PmFs1h_xZXg4-vi-M3qvAF-7E' #ETEN 12 V7
+# API_KEY = 'AIzaSyAIyxRxl-PmFs1h_xZXg4-vi-M3qvAF-7E' #ETEN 12 V7
+
+# API_KEY = 'AIzaSyBoTD-PhKmAGCtJsVPqVzX7UhyaLSvFElI' #ETEN 4 V1
+# API_KEY = 'AIzaSyBiEAoDNOj_8EZYl3CqqzlMNmdBdBz4myE' #ETEN 5 V1
+# API_KEY = 'AIzaSyBFVOV4GeyX41mnPrGKul_4oh0im4utIOk' #ETEN 6 V1
+# API_KEY = 'AIzaSyBENfn34CTKfv8-_5ksys5gttv6KjiQmJw' #ETEN 7 V1
+API_KEY = 'AIzaSyDU_TvRPkDLkCs8N-fY8Bv3i0CbHMI6u4o' #ETEN 8 V1
+# API_KEY = '' #ETEN 9 V1
+# API_KEY = '' #ETEN 10 V1
+# API_KEY = '' #ETEN 11 V1
+# API_KEY = '' #ETEN 12 V1
 
 
 def obtenerComentarios(recetaBuscar):
@@ -208,7 +219,7 @@ datos = pd.read_csv('recetas_csv/df_recetas_gratis_v2.csv',
 # Esto se utiliza para no exceder las peticiones de la api y que no de error
 # Se van ejecutando por tramos los csv
 # empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[8010:8020]
+datos_seleccionados = datos.iloc[9900:9910]
 
 for indice, fila in datos_seleccionados.iterrows():
 
