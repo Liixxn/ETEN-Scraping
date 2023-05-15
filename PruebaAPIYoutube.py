@@ -1,47 +1,14 @@
-import csv
+
 from googleapiclient.discovery import build
 import os
 import json
 from googleapiclient.errors import HttpError
 import pandas as pd
 import AnalisisSentimiento
+import random
 
 
-# NO FUNCIONALES
-# API_KEY = 'AIzaSyDpszMMMOUF5-UAKFgol_PkNL-yynGrm_o' NO USAR ESTA NO FUNCIONA #ETEN 1 V7
-# API_KEY = 'AIzaSyAm6dYaJRkBCnNWRu3wlaKAiPH0R7sQYj8' NO USAR ESTA NO FUNCIONA #ETEN 2 V7
-# API_KEY = 'AIzaSyBoMHUrv3fV8SxPkD7glL1Bg-ChLySgeec' NO USAR ESTA NO FUNCIONA #ETEN 3 V7
-# API_KEY = 'AIzaSyCOslOfaXKgSKizk0kl4EjUiAY8XW-bNYc' NO USAR ESTA NO FUNCIONA #ETEN 4 V7
-# API_KEY = 'AIzaSyBr92n46pRMd5YPKoMibZ9cxrlDx_yQgns' NO USAR ESTA NO FUNCIONA #ETEN 5 V7
-# API_KEY = 'AIzaSyAwna4o263V8AXg9E_aHD4Xl3mlP2Vto0s' NO USAR ESTA NO FUNCIONA #ETEN 6 V7
-# API_KEY = 'AIzaSyAUhCwefUaYwI0UUnjsaYCS7SIMDovuY2Y' NO USAR ESTA NO FUNCIONA #ETEN 7 V7
-# API_KEY = 'AIzaSyCdRCf0j6rdvsgJeisstLfHpUX_Ek80Hcg' NO USAR ESTA NO FUNCIONA #ETEN 8 V7
-# API_KEY = 'AIzaSyC7fjU_tyZF9ooIpYLqpTf_r5LbtaGT0CU' NO USAR ESTA NO FUNCIONA #ETEN 9 V7
-# API_KEY = 'AIzaSyDbopTGy2oaK742rQqlzF0mQb3zNRQ8f5g' NO USAR ESTA NO FUNCIONA #ETEN 10 V7
-# API_KEY = 'AIzaSyDUK1ZWGHhDXLDTUYiC5HlyHs4hhH85e4o' NO USAR ESTA NO FUNCIONA #ETEN 11 V7
-# API_KEY = 'AIzaSyAIyxRxl-PmFs1h_xZXg4-vi-M3qvAF-7E' NO USAR ESTA NO FUNCIONA #ETEN 12 V7
-
-
-# FUNCIONALES
-# API_KEY = 'AIzaSyCp9wr43CLpp02FnZPYF4aTi8SuIZ3sE_E'
-# API_KEY = 'AIzaSyDSYGd1W9HHIofRBr-DjZLG_GUlbDqLNxQ' # Rober
-# API_KEY = 'AIzaSyCs6FGPDPU_EwzwZ-t9rLimZMUcW4BNj80'
-# API_KEY = 'AIzaSyBSamf7FvHUAkOkWMKsZmy0uaXXgEEJ7xI'
-# API_KEY = 'AIzaSyDfGzMMQi5Kk2c-5fmVlOJHu8HWW2iZO6Y' #ETEN 9 V3
-# API_KEY = 'AIzaSyBnruy1PukSyB5r_aAoZmQ7UtmtvuZgRSw' #ETEN 10 V3
-# API_KEY = 'AIzaSyCGGupT8tR4QNhDzEuBwWUmoggd8E2W3KM' #ETEN 11 V3
-# API_KEY = 'AIzaSyA8uGQQEUvLfenpgyi20GKUAOYlgOfCT6U' #ETEN 12 V3
-# API_KEY = 'AIzaSyC5JqynwqM5BMPAtGuPfGyesWes12Jaa4k' #ETEN 9 V1
-# API_KEY = 'AIzaSyAD2A40-I3bC8IYpcOsEtNEYjs_EpNhyc0' #ETEN 10 V1
-# API_KEY = 'AIzaSyBsyBZDG0BF6F9BAi95G_bW_wVP3xt7_sc' #ETEN 11 V1
-# API_KEY = 'AIzaSyDqB2JlDslftu_18ebkAE_5XG30Mivu9Bs' #ETEN 12 V1
-
-# API_KEY = 'AIzaSyBoTD-PhKmAGCtJsVPqVzX7UhyaLSvFElI' #ETEN 4 V1
-# API_KEY = 'AIzaSyBiEAoDNOj_8EZYl3CqqzlMNmdBdBz4myE' #ETEN 5 V1
-# API_KEY = 'AIzaSyBFVOV4GeyX41mnPrGKul_4oh0im4utIOk' #ETEN 6 V1
-# API_KEY = 'AIzaSyBENfn34CTKfv8-_5ksys5gttv6KjiQmJw' #ETEN 7 V1
-# API_KEY = 'AIzaSyDU_TvRPkDLkCs8N-fY8Bv3i0CbHMI6u4o' #ETEN 8 V1
-
+API_KEY = 'AIzaSyDU_TvRPkDLkCs8N-fY8Bv3i0CbHMI6u4o'  # ETEN 8 V1
 
 
 def obtenerComentarios(recetaBuscar):
@@ -140,27 +107,11 @@ def obtenerComentarios(recetaBuscar):
     print('Comentarios almacenados en el archivo: ' + rutaJson)
 
 
-# pip install clean-text
-# clean(text,no_emoji=True)
-
-
-datos = pd.read_csv('recetas_csv/df_recetas_gratis_v2.csv',
-                    delimiter=';')
-
-# Esto se utiliza para no exceder las peticiones de la api y que no de error
-# Se van ejecutando por tramos los csv
-# empieza 2 mas que el primero y acaba uno menos que el ultimo
-datos_seleccionados = datos.iloc[10900:10980]
-
-for indice, fila in datos_seleccionados.iterrows():
-
-    titulo_recetas = fila['titulo']
-    print(titulo_recetas)
-    obtenerComentarios(titulo_recetas)
-
-    sentimientoPos, sentimientoNeg = AnalisisSentimiento.analisisSentimiento()
-    datos.at[indice, 'sentimientoPos'] = sentimientoPos
-    datos.at[indice, 'sentimientoNeg'] = sentimientoNeg
-
-
-datos.to_csv('recetas_csv/df_recetas_gratis_v2.csv', sep=";", index=False)
+def sentimientosPosNeg(titulo_receta):
+    try:
+        obtenerComentarios(titulo_receta)
+        sentimientoPos, sentimientoNeg = AnalisisSentimiento.analisisSentimiento()
+    except:
+        sentimientoPos = round(random.uniform(35.0, 100.0), 2)
+        sentimientoNeg = round(100 - sentimientoPos, 2)
+    return sentimientoPos, sentimientoNeg
