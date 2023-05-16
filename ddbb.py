@@ -6,7 +6,7 @@ from numpy import double
 import re
 import pymysql
 
-df = pd.read_csv("recetas_csv/df_hola_todo.csv", sep=";")
+df = pd.read_csv("recetas_csv/df_recetas_gratis_v2.csv", sep=";")
 
 
 conn = pymysql.connect(host='195.235.211.197', user='pc2_grupo3', password='PComputacion.23', database='pc2_grupo3')
@@ -42,24 +42,24 @@ if len(resultados) > 0:
             ingredientes = df["ingredientes"][receta]
 
 
-            # # PARA EL DE RECETAS ONLINE
-            # ingredientes = ingredientes.replace("[", "").replace("]", "")
-            # arrayIngredientes = ingredientes.split("', '")
-            #
-            # arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
-            # arrayIngredientes[len(arrayIngredientes) - 1] = arrayIngredientes[len(arrayIngredientes) - 1].replace("'",
-            #                                                                                                       "")
-
-
-
-            # PARA EL DE RECETAS HOLA
+            # PARA EL DE RECETAS ONLINE
             ingredientes = ingredientes.replace("[", "").replace("]", "")
-            # esto para el de df_hola_todo.csv
             arrayIngredientes = ingredientes.split("', '")
 
             arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
             arrayIngredientes[len(arrayIngredientes) - 1] = arrayIngredientes[len(arrayIngredientes) - 1].replace("'",
                                                                                                                   "")
+
+
+
+            # # PARA EL DE RECETAS HOLA
+            # ingredientes = ingredientes.replace("[", "").replace("]", "")
+            # # esto para el de df_hola_todo.csv
+            # arrayIngredientes = ingredientes.split("', '")
+            #
+            # arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
+            # arrayIngredientes[len(arrayIngredientes) - 1] = arrayIngredientes[len(arrayIngredientes) - 1].replace("'",
+            #                                                                                                       "")
 
 
 
@@ -107,23 +107,23 @@ else:
         img = str(df["imagen"][i])
 
         ingredientes = df["ingredientes"][i]
-        # ingredientes = ingredientes.replace("[", "").replace("]", "")
-        # arrayIngredientes = ingredientes.split("', '")
-        #
-        # arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
-        # arrayIngredientes[len(arrayIngredientes)-1] = arrayIngredientes[len(arrayIngredientes)-1].replace("'", "")
-
-
-
-
-        ## PARA EL DE RECETAS HOLA
         ingredientes = ingredientes.replace("[", "").replace("]", "")
-        # esto para el de df_hola_todo.csv
         arrayIngredientes = ingredientes.split("', '")
 
         arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
-        arrayIngredientes[len(arrayIngredientes) - 1] = arrayIngredientes[len(arrayIngredientes) - 1].replace("'",
-                                                                                                              "")
+        arrayIngredientes[len(arrayIngredientes)-1] = arrayIngredientes[len(arrayIngredientes)-1].replace("'", "")
+
+
+
+
+        # # PARA EL DE RECETAS HOLA
+        # ingredientes = ingredientes.replace("[", "").replace("]", "")
+        # # esto para el de df_hola_todo.csv
+        # arrayIngredientes = ingredientes.split("', '")
+        #
+        # arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
+        # arrayIngredientes[len(arrayIngredientes) - 1] = arrayIngredientes[len(arrayIngredientes) - 1].replace("'",
+        #                                                                                                       "")
 
 
         duracion = str(df["duracion"][i])

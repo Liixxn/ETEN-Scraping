@@ -3,10 +3,10 @@ import joblib
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import mysql.connector
+import pymysql
+import math
 
 import PruebaAPIYoutube
-import AnalisisSentimiento
 import procesamientoTexto
 
 # Headers para poder acceder a la pagina
@@ -164,23 +164,21 @@ def obtenerDatosReceta(recetas_x_categoria):
 
         # Esta parte es para obtener la informacion de los comentarios de cada receta, no se recomienda hacerlo
 
-        # if titulo_receta == "Sin Informacion":
-        #     lista_sentimientoPositivos.append("Sin Informacion")
-        #     lista_sentimientoNegativos.append("Sin Informacion")
-        # else:
-        #     PruebaAPIYoutube.obtenerComentarios(titulo_receta)
-        #     print(titulo_receta)
-        #     senPos, senNeg = AnalisisSentimiento.analisisSentimiento()
-        #     lista_sentimientoPositivos.append(senPos)
-        #     lista_sentimientoNegativos.append(senNeg)
+        if titulo_receta == "Sin Informacion":
+            lista_sentimientoPositivos.append(0)
+            lista_sentimientoNegativos.append(0)
+        else:
+            senPos, senNeg = PruebaAPIYoutube.sentimientosPosNeg(titulo_receta)
+            lista_sentimientoPositivos.append(senPos)
+            lista_sentimientoNegativos.append(senNeg)
 
-    return titulos_recetas_recetas_online, comensales_porReceta_recetas_online, tiempo_porReceta_recetas_online, ingredientes_porReceta_recetas_online, pasos_porReceta_recetas_online  # , lista_sentimientoPositivos, lista_sentimientoNegativos
+    return titulos_recetas_recetas_online, comensales_porReceta_recetas_online, tiempo_porReceta_recetas_online, ingredientes_porReceta_recetas_online, pasos_porReceta_recetas_online, lista_sentimientoPositivos, lista_sentimientoNegativos
 
 
 lista_categoriasRecetasOnline = obtenerCategorias_RecetasOnline()
 lista_recetasRecetasOnline, lista_imagenesRecetasOnline = obtenerNumPaginasPorCategoria(lista_categoriasRecetasOnline)
 obtenerDatosReceta(lista_recetasRecetasOnline)
-titulos, comen, tiempo, ingredientes, pasos = obtenerDatosReceta(lista_recetasRecetasOnline)
+titulos, comen, tiempo, ingredientes, pasos, senPos, senNeg = obtenerDatosReceta(lista_recetasRecetasOnline)
 
 df = pd.DataFrame(
     columns=["titulo", "imagen", "comensales", "duracion", "dificultad", "ingredientes", "pasos", "sentimientoPos",
@@ -192,50 +190,148 @@ df["duracion"] = tiempo
 df["dificultad"] = ""
 df["ingredientes"] = ingredientes
 df["pasos"] = pasos
-df["sentimientoPos"] = ""
-df["sentimientoNeg"] = ""
+df["sentimientoPos"] = senPos
+df["sentimientoNeg"] = senNeg
 df["Categoria"] = "Sin Clasificar"
 
-# df.to_csv('recetas_csv/df_recetas_online.csv', index=False, sep=";")
 
-# obtener comentarios de cada receta
+
 df_recetas_online = df.copy()
-# df_recetas_online = pd.read_csv('recetas_csv/df_recetas_online.csv', sep=";")
-# for titulo in df_recetas_online["titulo"]:
-#     if titulo == "Sin Informacion":
-#         df_recetas_online["sentimiento_pos"] = "Sin Informacion"
-#         df_recetas_online["sentimiento_neg"] = "Sin Informacion"
-#     else:
-#         PruebaAPIYoutube.obtenerComentarios(titulo)
-#         print(titulo)
-#         senPos, senNeg = AnalisisSentimiento.analisisSentimiento()
-#         df_recetas_online["sentimiento_pos"] = senPos
-#         df_recetas_online["sentimiento_neg"] = senNeg
 
 
-# df_clasificacion = pd.DataFrame(columns=["Receta", "Categoria"])
-#
-# listaRecetasContenido = []
-#
-# for indiceDF, fila in df_recetas_online.iterrows():
-#     listaRecetasContenido.append(fila["titulo"] + fila["pasos"])
-#
-# df_clasificacion["Receta"] = listaRecetasContenido
-# df_clasificacion["Categoria"] = "Sin Clasificar"
-#
-# df_tratado = procesamientoTexto.tratamientoBasico(df_clasificacion)
-# df_stopwords = procesamientoTexto.quit_stopwords(df_tratado)
-# df_stem = procesamientoTexto.stemming(df_stopwords)
-#
-# cargaModelo = joblib.load("modeloRandomForest.pkl")
-# for i in range(len(df_stem["Receta"])):
-#     unidos = " ".join(df_stem["Receta"][i])
-#
-#     df_stem["Receta"][i] = str(unidos)
-#
-# Y_pred = cargaModelo.predict(df_stem['Receta'])
-# listaPredicciones = Y_pred.tolist()
-# df["Categoria"] = listaPredicciones
+df_clasificacion = pd.DataFrame(columns=["Receta", "Categoria"])
+
+listaRecetasContenido = []
+
+for indiceDF, fila in df_recetas_online.iterrows():
+    listaRecetasContenido.append(fila["titulo"] + fila["pasos"])
+
+df_clasificacion["Receta"] = listaRecetasContenido
+df_clasificacion["Categoria"] = "Sin Clasificar"
+
+df_tratado = procesamientoTexto.tratamientoBasico(df_clasificacion)
+df_stopwords = procesamientoTexto.quit_stopwords(df_tratado)
+df_stem = procesamientoTexto.stemming(df_stopwords)
+
+cargaModelo = joblib.load("modeloRandomForest.pkl")
+for i in range(len(df_stem["Receta"])):
+    unidos = " ".join(df_stem["Receta"][i])
+
+    df_stem["Receta"][i] = str(unidos)
+
+Y_pred = cargaModelo.predict(df_stem['Receta'])
+listaPredicciones = Y_pred.tolist()
+df["Categoria"] = listaPredicciones
+
+
+conn = pymysql.connect(host='195.235.211.197', user='pc2_grupo3', password='PComputacion.23', database='pc2_grupo3')
+cursor = conn.cursor()
+
+sql_obtenerDatos = "SELECT * FROM recetas"
+
+cursor.execute(sql_obtenerDatos)
+resultados = cursor.fetchall()
+
+recetaEncontrada = False
+
+if len(resultados) > 0:
+    for receta in range(len(df["titulo"])):
+        recetaEncontrada = False
+        final = 0
+        while(recetaEncontrada==False and final < len(resultados)):
+            if (df["titulo"][receta] == resultados[final][2]) and (df["imagen"][receta] == resultados[final][4]):
+                recetaEncontrada = True
+            else:
+                final += 1
+
+        if recetaEncontrada == False:
+            sql = "INSERT INTO recetas (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo, sentimiento_pos, sentimiento_neg) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+            categoria = str(df["Categoria"][receta])
+            titulo = str(df["titulo"][receta])
+            descripcion = str(df["pasos"][receta])
+            img = str(df["imagen"][receta])
+            ingredientes = df["ingredientes"][receta]
+
+            ingredientes = ingredientes.replace("[", "").replace("]", "")
+            arrayIngredientes = ingredientes.split("', '")
+
+            arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
+            arrayIngredientes[len(arrayIngredientes) - 1] = arrayIngredientes[len(arrayIngredientes) - 1].replace("'",
+                                                                                                                  "")
+            duracion = str(df["duracion"][receta])
+            comensales = str(df["comensales"][receta])
+            dificultad = str(df["dificultad"][receta])
+            activo = 1
+            sentimiento_pos = float(df["sentimientoPos"][receta])
+            sentimiento_neg = float(df["sentimientoNeg"][receta])
+
+            if (math.isnan(sentimiento_pos) and math.isnan(sentimiento_neg)):
+                sentimiento_pos = 0.0
+                sentimiento_neg = 0.0
+
+
+            val = (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo,
+                   sentimiento_pos, sentimiento_neg)
+            cursor.execute(sql, val)
+            conn.commit()
+
+            sqlTrasInserccion = "SELECT id FROM recetas ORDER BY id DESC LIMIT 1"
+            cursor.execute(sqlTrasInserccion)
+            resultadosTrasLaInserccion = cursor.fetchone()
+
+            sqlIngredienes = "INSERT INTO ingredientes (id_receta, nombre_ingrediente) VALUES (%s, %s);"
+            id_receta = int(resultadosTrasLaInserccion[0])
+            for j in range(len(arrayIngredientes)):
+                nombre_ingrediente = str(arrayIngredientes[j])
+                val = (id_receta, nombre_ingrediente)
+                cursor.execute(sqlIngredienes, val)
+                conn.commit()
+
+
+
+
+else:
+    for i in range(len(df["titulo"])):
+        sql = "INSERT INTO recetas (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo, sentimiento_pos, sentimiento_neg) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        categoria = str(df["Categoria"][i])
+        titulo = str(df["titulo"][i])
+        descripcion = str(df["pasos"][i])
+        img = str(df["imagen"][i])
+        ingredientes = df["ingredientes"][i]
+
+        ingredientes = ingredientes.replace("[", "").replace("]", "")
+        arrayIngredientes = ingredientes.split("', '")
+
+        arrayIngredientes[0] = arrayIngredientes[0].replace("'", "")
+        arrayIngredientes[len(arrayIngredientes)-1] = arrayIngredientes[len(arrayIngredientes)-1].replace("'", "")
+
+        duracion = str(df["duracion"][i])
+        comensales = str(df["comensales"][i])
+        dificultad = str(df["dificultad"][i])
+        activo = 1
+        sentimiento_pos = float(df["sentimientoPos"][i])
+        sentimiento_neg = float(df["sentimientoNeg"][i])
+
+        if (math.isnan(sentimiento_pos) and math.isnan(sentimiento_neg)):
+            sentimiento_pos = 0.0
+            sentimiento_neg = 0.0
+
+
+        val = (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo, sentimiento_pos, sentimiento_neg)
+        cursor.execute(sql, val)
+        conn.commit()
+
+        sqlTrasInserccion = "SELECT id FROM recetas ORDER BY id DESC LIMIT 1"
+        cursor.execute(sqlTrasInserccion)
+        resultadosTrasLaInserccion = cursor.fetchone()
+
+        sqlIngredienes2 = "INSERT INTO ingredientes (id_receta, nombre_ingrediente) VALUES (%s, %s);"
+        id_receta = int(resultadosTrasLaInserccion[0])
+        for j in range(len(arrayIngredientes)):
+            nombre_ingrediente = str(arrayIngredientes[j])
+            val = (id_receta, nombre_ingrediente)
+            cursor.execute(sqlIngredienes2, val)
+            conn.commit()
 
 
 
