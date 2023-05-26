@@ -1,13 +1,7 @@
 import os
-
-import joblib
-import numpy as np
 from pathlib import Path
-from nltk import word_tokenize, RegexpTokenizer
-import natsort
+from nltk import RegexpTokenizer
 from nltk.stem import SnowballStemmer
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-import pandas as pd
 
 
 

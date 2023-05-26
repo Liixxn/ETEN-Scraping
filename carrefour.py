@@ -38,7 +38,6 @@ def paginacion(url_carrefour):
 
                 name = card.find('p', {'class': 'title-product'}).text.strip()
                 # Imprimo todos los productos que no tienen descuentos especiales (los que nos interesan)
-                #print('Product Name:', name)
 
                 try:
                     price = card.find('span', {'class': 'price'}).text.strip()
@@ -48,7 +47,6 @@ def paginacion(url_carrefour):
                     price_less = card.find('span', {'class': 'price-less'}).text.strip()
 
                 image_url = card.find('img')['src']
-                # print('Image URL:', image_url)
 
                 url = card.find('a')['href']
                 url_oferta = "https://www.carrefour.es" + url
@@ -92,12 +90,6 @@ def scraper_carrefour():
     df_ofertas['price'] = df_ofertas['price'].astype(float)
     df_ofertas['price_less'] = df_ofertas['price_less'].astype(float)
 
-    #df_ofertas['price'] = df_ofertas['price'].str.replace('€', '')
-    #df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', '')
-    #df_ofertas['price'] = str(df_ofertas['price']).trim()
-    #df_ofertas['price_less'] = str(df_ofertas['price_less']).str.trim()
-
     df_ofertas.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
 
     return df_ofertas
-#df_ofertas.to_csv('ofertas/ofertas_carrefour.csv', sep=';', index=False, encoding='ISO 8859-1')

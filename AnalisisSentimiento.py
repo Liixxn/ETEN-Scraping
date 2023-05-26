@@ -1,5 +1,4 @@
 from nltk.sentiment import SentimentIntensityAnalyzer
-from nltk.corpus import stopwords
 import regex as re
 import statistics
 from cleantext import clean

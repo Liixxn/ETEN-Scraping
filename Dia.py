@@ -24,7 +24,7 @@ lista_hojas_ofertas_dia.append(url)
 final_ofertas_dia = False
 
 # Bucle que comprueba que no se haya llegado al final de las paginas de las ofertas
-while (final_ofertas_dia==False):
+while (final_ofertas_dia == False):
 
     response = requests.get(url, headers=header)
     soup_dia = BeautifulSoup(response.content, 'html.parser')
@@ -38,12 +38,11 @@ while (final_ofertas_dia==False):
         next_button = soup_dia.find('a', class_="btn-pager btn-pager--next").get('href')
         # Se une el link de la pagina principal de dia y la url obtenida anteriormente, ya que este href obtenido es un
         # link que se basa en el link de la principal
-        link_unido = url_original+next_button
+        link_unido = url_original + next_button
         # Se aniade a la lista de hojas de las ofertas
         lista_hojas_ofertas_dia.append(link_unido)
         # Se reemplaza el link nuevo para que sea el siguiente a evaluar
         url = link_unido
-
 
 # listas que guardaran los diferentes productos
 nombre_producto = []
@@ -62,7 +61,6 @@ for link in lista_hojas_ofertas_dia:
     # Se obtienen todos los productos que se encuentren en esa hoja
     productos = soup_dia_ofertas.find_all('div', class_="product-list__item")
 
-
 # Se recorre cada producto para ser analziado, ya que en la pagina de ofertas tambien se encuentran elementos que no
 # pertencen a alimentacion, por lo que se debe realizar un filtro. Para ello se va hacer uso de la lista 'words' que
 # comprueba que en la url de cada producto aparezca alguno de esas categorias, ya que asi se puede determinar que
@@ -79,8 +77,6 @@ for link in lista_hojas_ofertas_dia:
         for i, word in enumerate(words):
             # Aqui se comprueba que exista en la url alguna de las categorias
             if word in product.find('a').get('href'):
-
-
 
                 # Se obtiene el precio del producto
                 precio = product.find('p', class_='price')
@@ -102,16 +98,12 @@ for link in lista_hojas_ofertas_dia:
                     imagenes_producto.append(imagen)
 
                     producto_url = product.find('a').get('href')
-                    productos_urls.append(url_original+producto_url)
+                    productos_urls.append(url_original + producto_url)
 
                     url_tratada = urlparse(producto_url)
                     componente = url_tratada.path.split("/")
                     categoria = componente[2]
                     categorias_producto.append(categoria)
-
-
-
-
 
 df_dia = pd.DataFrame({'nombre': nombre_producto,
                        'precio_original': precios_original,
@@ -122,10 +114,10 @@ df_dia = pd.DataFrame({'nombre': nombre_producto,
 
 pd.set_option('display.max_rows', None)
 
-                    url_tratada = urlparse(producto_url)
-                    componente = url_tratada.path.split("/")
-                    categoria = componente[2]
-                    categorias_producto.append(categoria)
+url_tratada = urlparse(producto_url)
+componente = url_tratada.path.split("/")
+categoria = componente[2]
+categorias_producto.append(categoria)
 
 df_dia = pd.DataFrame({'nombre': nombre_producto,
                        'precio_original': precios_original,
@@ -134,8 +126,8 @@ df_dia = pd.DataFrame({'nombre': nombre_producto,
                        'url': productos_urls,
                        'categoria': categorias_producto})
 
-def scraper_dia():
 
+def scraper_dia():
     df_dia['nombre'] = nombre_producto
     df_dia['precio_original'] = precios_original
     df_dia['precio_actual'] = precios_descuento
@@ -153,5 +145,3 @@ def scraper_dia():
     df_dia.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
     return df_dia
 
-# Se escribe el contenido del dataframe a un csv
-#df_dia.to_csv('ofertas/dia-ofertas.csv', sep=';', index=False)
