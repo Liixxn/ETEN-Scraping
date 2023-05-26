@@ -6,63 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0b23083e-61c9-4a5b-9135-d07b5eafaf97" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AnalisisSentimiento.py" beforeDir="false" afterPath="$PROJECT_DIR$/AnalisisSentimiento.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Carrefour.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Dia.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dia.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PruebaAPIYoutube.py" beforeDir="false" afterPath="$PROJECT_DIR$/PruebaAPIYoutube.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carrefour.py" beforeDir="false" afterPath="$PROJECT_DIR$/carrefour.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ddbb.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_0.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_10.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_11.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_12.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_13.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_14.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_15.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_16.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_17.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_18.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_19.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_20.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_21.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_22.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_4.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_5.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_6.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_7.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_8.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_hola/df_hola_final_9.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_recetas_gratis.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_recetas_gratis.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/df_recetas_online.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ofertas/dia-ofertas.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ofertas/ofertas_carrefour.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ofertas/ofertas_concatenadas.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/procesamientoTexto.py" beforeDir="false" afterPath="$PROJECT_DIR$/procesamientoTexto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_csv/df_hola_todo.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_csv/df_recetas_gratis_v2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_csv/df_recetas_online.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_0.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_10.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_11.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_12.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_13.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_14_15.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_16.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_4.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_5.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_6.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_7.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_8.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/recetas_gratis_csv/df_recetas_gratis_9.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scraping_recetas_web.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainingModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainingModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ofertas_concat.py" beforeDir="false" afterPath="$PROJECT_DIR$/ofertas_concat.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +186,8 @@
       <workItem from="1684230919201" duration="205000" />
       <workItem from="1684248898912" duration="2590000" />
       <workItem from="1684262541181" duration="6074000" />
-      <workItem from="1685114955729" duration="893000" />
+      <workItem from="1685114955729" duration="951000" />
+      <workItem from="1685123133605" duration="553000" />
     </task>
     <servers />
   </component>
