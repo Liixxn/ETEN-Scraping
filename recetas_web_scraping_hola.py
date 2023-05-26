@@ -100,8 +100,12 @@ def scrapingPorCategoria(todas_categorias_hola):
             if c.find('div', class_='o-card-caption_parameters') and nombre_categoria_seleccionada == c.find('span', class_='o-card-caption_section').get_text().strip():
                 titulo_recetas.append(
                     c.find('a', class_='o-card_title stretched-link').get_text().strip())
-                imagen_cadaReceta.append(
-                    c.find('img', class_='o-card-figure_image').get('src'))
+                if c.find('img', class_='o-card-figure_image').get('src') is None:
+                    imagen_cadaReceta.append(
+                        '/assets/imgs/recetaSinImagen.jpg')
+                else:
+                    imagen_cadaReceta.append(
+                        c.find('img', class_='o-card-figure_image').get('src'))
                 print(c.find('img', class_='o-card-figure_image').get('src'))
                 recetas_duracion.append(
                     c.find('p', class_='o-card-parameter o-card-parameter_time').get_text().strip())
@@ -191,8 +195,6 @@ df["sentimientoPos"] = lista_sentimientoPositivos
 df["sentimientoNeg"] = lista_sentimientoNegativos
 
 
-
-
 df_recetas_online = df.copy()
 
 df_clasificacion = pd.DataFrame(columns=["Receta", "Categoria"])
@@ -220,8 +222,8 @@ listaPredicciones = Y_pred.tolist()
 df["Categoria"] = listaPredicciones
 
 
-
-conn = pymysql.connect(host='195.235.211.197', user='pc2_grupo3', password='PComputacion.23', database='pc2_grupo3')
+conn = pymysql.connect(host='195.235.211.197', user='pc2_grupo3',
+                       password='PComputacion.23', database='pc2_grupo3')
 cursor = conn.cursor()
 
 sql_obtenerDatos = "SELECT * FROM recetas"
@@ -235,7 +237,7 @@ if len(resultados) > 0:
     for receta in range(len(df["titulo"])):
         recetaEncontrada = False
         final = 0
-        while(recetaEncontrada==False and final < len(resultados)):
+        while (recetaEncontrada == False and final < len(resultados)):
             if (df["titulo"][receta] == resultados[final][2]) and (df["imagen"][receta] == resultados[final][4]):
                 recetaEncontrada = True
             else:
@@ -265,7 +267,6 @@ if len(resultados) > 0:
                 sentimiento_pos = 0.0
                 sentimiento_neg = 0.0
 
-
             val = (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo,
                    sentimiento_pos, sentimiento_neg)
             cursor.execute(sql, val)
@@ -282,8 +283,6 @@ if len(resultados) > 0:
                 val = (id_receta, nombre_ingrediente)
                 cursor.execute(sqlIngredienes, val)
                 conn.commit()
-
-
 
 
 else:
@@ -312,8 +311,8 @@ else:
             sentimiento_pos = 0.0
             sentimiento_neg = 0.0
 
-
-        val = (categoria, titulo, descripcion, img, duracion, comensales, dificultad, activo, sentimiento_pos, sentimiento_neg)
+        val = (categoria, titulo, descripcion, img, duracion, comensales,
+               dificultad, activo, sentimiento_pos, sentimiento_neg)
         cursor.execute(sql, val)
         conn.commit()
 

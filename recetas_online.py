@@ -90,7 +90,7 @@ def obtenerNumPaginasPorCategoria(links_categorias_recetas_online):
         # Obtener la imagen de cada plato
         imagen_plato = soup_pag_link_categoria_.find_all('div', class_="post-thumb single-img-box")
         if imagen_plato is None:
-            imagen_plato = "Sin Informacion"
+            imagen_plato = "/assets/imgs/recetaSinImagen.jpg"
             imagen_recetas_recetas_online.append(imagen_plato)
         else:
 

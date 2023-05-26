@@ -137,7 +137,7 @@ def obtener_datos_receta(nombres_recetas_pag):
                 imagen_plato_recetasGratis = soup_receta_info.find('div', class_="imagen")
 
                 if imagen_plato_recetasGratis is None:
-                    imagen_plato_recetasGratis = "Sin Informacion"
+                    imagen_plato_recetasGratis = "/assets/imgs/recetaSinImagen.jpg"
                     imagen_cadaReceta.append(imagen_plato_recetasGratis)
                 else:
                     # Se obtiene la etiqueta <img> y de ella la url de la imagen
@@ -145,7 +145,7 @@ def obtener_datos_receta(nombres_recetas_pag):
 
                     imagen_cadaReceta.append(link_imagen_plato)
             except Exception as e:
-                imagen_plato_recetasGratis = "Sin Informacion"
+                imagen_plato_recetasGratis = "/assets/imgs/recetaSinImagen.jpg"
                 imagen_cadaReceta.append(imagen_plato_recetasGratis)
 
             # Obtener el numero de comensales
