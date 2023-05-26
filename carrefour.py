@@ -31,7 +31,7 @@ def paginacion(url_carrefour):
         pag = leerHtml("https://www.carrefour.es" + i['value'])
         product_cards = pag.find_all('article', {'class': 'product-card-item'})
         for card in product_cards[:-1]:
-                
+
             badge = card.find('div', {'class': 'bg-promocion-copy'})
 
             if badge is None:
@@ -52,13 +52,13 @@ def paginacion(url_carrefour):
 
                 url = card.find('a')['href']
                 url_oferta = "https://www.carrefour.es" + url
-                
+
                 parsed_url = urlparse(url)
-                
+
                 query_parms = parse_qs(parsed_url.query)
-                
+
                 prt_id = query_parms['prtId'][0]
-                    
+
                 df.loc[len(df)] = {'titulo': name, 'price': price, 'price_less': price_less, 'url_img': image_url, 'url': url_oferta, 'category': prt_id}
             else:
 
@@ -78,7 +78,7 @@ def scraper_carrefour():
         "https://www.carrefour.es/supermercado/ofertas/N-177ap79Zc7a800?Nr=AND%28product.shopCodes%3A004320%2Cproduct.salepointWithActivePrice_004320%3A1%2COR%28product.siteId%3AbasicSite%29%2ConSaleSalePoints%3A004320%29&prtId=cat20003")
 
     df_ofertas = pd.concat([df_productos_frescos, df_despensa, df_bebidas])
-    
+
     #Productos frescos
     df_ofertas['category'] = df_ofertas['category'].str.replace('cat20002', '1')
     #Despensa
@@ -91,12 +91,12 @@ def scraper_carrefour():
     df_ofertas['price_less'] = df_ofertas['price_less'].str.replace(',', '.').str.strip()
     df_ofertas['price'] = df_ofertas['price'].astype(float)
     df_ofertas['price_less'] = df_ofertas['price_less'].astype(float)
-    
+
     #df_ofertas['price'] = df_ofertas['price'].str.replace('€', '')
     #df_ofertas['price_less'] = df_ofertas['price_less'].str.replace('€', '')
     #df_ofertas['price'] = str(df_ofertas['price']).trim()
     #df_ofertas['price_less'] = str(df_ofertas['price_less']).str.trim()
-    
+
     df_ofertas.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
 
     return df_ofertas

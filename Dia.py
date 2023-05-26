@@ -25,7 +25,7 @@ final_ofertas_dia = False
 
 # Bucle que comprueba que no se haya llegado al final de las paginas de las ofertas
 while (final_ofertas_dia==False):
-    
+
     response = requests.get(url, headers=header)
     soup_dia = BeautifulSoup(response.content, 'html.parser')
     # Se comprueba que exista el marcador que comprueba que existe una siguiente hoja de ofertas
@@ -35,7 +35,7 @@ while (final_ofertas_dia==False):
         final_ofertas_dia = True
     else:
         # Se obtiene la url para el marcador, que es la siguiente hoja de ofertas
-        next_button = soup_dia.find('a', class_="btn-pager btn-pager--next").get('href') 
+        next_button = soup_dia.find('a', class_="btn-pager btn-pager--next").get('href')
         # Se une el link de la pagina principal de dia y la url obtenida anteriormente, ya que este href obtenido es un
         # link que se basa en el link de la principal
         link_unido = url_original+next_button
@@ -44,9 +44,9 @@ while (final_ofertas_dia==False):
         # Se reemplaza el link nuevo para que sea el siguiente a evaluar
         url = link_unido
 
-        
-# listas que guardaran los diferentes productos   
-nombre_producto = []        
+
+# listas que guardaran los diferentes productos
+nombre_producto = []
 precios_original = []
 precios_descuento = []
 imagenes_producto = []
@@ -79,7 +79,8 @@ for link in lista_hojas_ofertas_dia:
         for i, word in enumerate(words):
             # Aqui se comprueba que exista en la url alguna de las categorias
             if word in product.find('a').get('href'):
-                
+
+
 
                 # Se obtiene el precio del producto
                 precio = product.find('p', class_='price')
@@ -102,7 +103,7 @@ for link in lista_hojas_ofertas_dia:
 
                     producto_url = product.find('a').get('href')
                     productos_urls.append(url_original+producto_url)
-                   
+
                     url_tratada = urlparse(producto_url)
                     componente = url_tratada.path.split("/")
                     categoria = componente[2]
@@ -112,14 +113,26 @@ for link in lista_hojas_ofertas_dia:
 
 
 
-df_dia = pd.DataFrame({'nombre': nombre_producto, 
-                       'precio_original': precios_original, 
-                       'precio_actual': precios_descuento, 
-                       'imagen': imagenes_producto, 
-                       'url': productos_urls, 
+df_dia = pd.DataFrame({'nombre': nombre_producto,
+                       'precio_original': precios_original,
+                       'precio_actual': precios_descuento,
+                       'imagen': imagenes_producto,
+                       'url': productos_urls,
                        'categoria': categorias_producto})
 
 pd.set_option('display.max_rows', None)
+
+                    url_tratada = urlparse(producto_url)
+                    componente = url_tratada.path.split("/")
+                    categoria = componente[2]
+                    categorias_producto.append(categoria)
+
+df_dia = pd.DataFrame({'nombre': nombre_producto,
+                       'precio_original': precios_original,
+                       'precio_actual': precios_descuento,
+                       'imagen': imagenes_producto,
+                       'url': productos_urls,
+                       'categoria': categorias_producto})
 
 def scraper_dia():
 
@@ -129,7 +142,7 @@ def scraper_dia():
     df_dia['imagen'] = imagenes_producto
     df_dia['url'] = productos_urls
     df_dia['categoria'] = categorias_producto
-     
+
     df_dia["categoria"] = df_dia["categoria"].str.replace("bodega", "3")
     df_dia["categoria"] = df_dia["categoria"].str.replace("bebidas", "3")
     df_dia["categoria"] = df_dia["categoria"].str.replace("platos-preparados", "1")
@@ -139,6 +152,6 @@ def scraper_dia():
 
     df_dia.columns = ['nombreOferta', 'precioActual', 'precioAnterior', 'imagenOferta', 'urlOferta', 'categoria']
     return df_dia
-    
+
 # Se escribe el contenido del dataframe a un csv
 #df_dia.to_csv('ofertas/dia-ofertas.csv', sep=';', index=False)
