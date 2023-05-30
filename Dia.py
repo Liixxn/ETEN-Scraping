@@ -32,6 +32,7 @@ def scraper_dia():
 
         response = requests.get(url, headers=header)
         soup_dia = BeautifulSoup(response.content, 'html.parser')
+
         # Se comprueba que exista el marcador que comprueba que existe una siguiente hoja de ofertas
         next_button = soup_dia.find('a', class_="btn-pager btn-pager--next")
         # Si este marcador es nulo, significa que hemos llegado al final de las hojas de ofertas
@@ -109,19 +110,12 @@ def scraper_dia():
                         categoria = componente[2]
                         categorias_producto.append(categoria)
 
-    df_dia = pd.DataFrame({'nombre': nombre_producto,
-                           'precio_original': precios_original,
-                           'precio_actual': precios_descuento,
-                           'imagen': imagenes_producto,
-                           'url': productos_urls,
-                           'categoria': categorias_producto})
+                        pd.set_option('display.max_rows', None)
 
-    pd.set_option('display.max_rows', None)
-
-    url_tratada = urlparse(producto_url)
-    componente = url_tratada.path.split("/")
-    categoria = componente[2]
-    categorias_producto.append(categoria)
+                        url_tratada = urlparse(producto_url)
+                        componente = url_tratada.path.split("/")
+                        categoria = componente[2]
+                        categorias_producto.append(categoria)
 
     df_dia = pd.DataFrame({'nombre': nombre_producto,
                            'precio_original': precios_original,
@@ -136,6 +130,8 @@ def scraper_dia():
     df_dia['imagen'] = imagenes_producto
     df_dia['url'] = productos_urls
     df_dia['categoria'] = categorias_producto
+
+    df_dia["categoria"] = df_dia["categoria"].astype(str)
 
     df_dia["categoria"] = df_dia["categoria"].str.replace("bodega", "3")
     df_dia["categoria"] = df_dia["categoria"].str.replace("bebidas", "3")

@@ -11,6 +11,9 @@ def main():
     # Llama a la función de scraping de DIA y guarda el resultado en un DataFrame
     df_dia = scraper_dia()
 
+    df_dia['precioAnterior'] = df_dia['precioAnterior'].astype(str)
+    df_dia['precioActual'] = df_dia['precioActual'].astype(str)
+
     df_dia['precioAnterior'] = df_dia['precioAnterior'].str.replace('€', '').str.strip()
     df_dia['precioActual'] = df_dia['precioActual'].str.replace('€', '').str.strip()
     df_dia['precioAnterior'] = df_dia['precioAnterior'].str.replace(',', '.').str.strip()
@@ -58,6 +61,8 @@ def main():
         resultadosTrasLaInserccion = cursor.fetchone()
 
         conn.commit()
+
+    print("Se han obtenido las ofertas con éxito")
 
 if __name__ == '__main__':
     main()
